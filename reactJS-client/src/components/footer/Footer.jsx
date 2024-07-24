@@ -6,7 +6,7 @@ export default function Footer() {
 
   const informationLink = [
     {
-      to: "/aboutUs",
+      to: "/",
       title: "About Us",
     },
     {

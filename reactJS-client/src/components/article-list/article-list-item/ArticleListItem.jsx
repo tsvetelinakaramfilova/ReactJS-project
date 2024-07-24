@@ -11,7 +11,7 @@ export default function ArticleListItem({ article }) {
 
   return (
     <>
-      <div className="card my-4 bg-light">
+      <div className="card my-4 shadow-sm p-3 mb-5 bg-body rounded">
         <div className="row">
           <div className="col-lg-4 text-center my-auto">
             <img

@@ -6,6 +6,7 @@ import articlesApi from "../../api/articles-api";
 import ArticleTag from "../article-tag/ArticleTag";
 import EditRemoveButton from "../edit-remove-button/EditRemoveButton";
 import CommentSection from "../comment-section/CommentSection";
+import Loader from "../loader/Loader";
 
 export default function ArticleDetails() {
   const { articleId } = useParams();
@@ -24,7 +25,9 @@ export default function ArticleDetails() {
 
   console.log(article);
 
-  return (
+  return isFetching ? (
+    <Loader />
+  ) : (
     <div className="container">
       {/* <StarRating /> */}
       <div className="mb-4 mt-2 d-flex justify-content-between">
