@@ -1,6 +1,5 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import brandLogo from "../../assets/Logo_f.png";
 
 export default function Header() {
@@ -41,7 +40,7 @@ export default function Header() {
 
   const getNav = (item) => {
     return (
-      <Nav.Link key={item.title} href={item.to}>
+      <Nav.Link as={Link} key={item.title} to={item.to}>
         {item.title}
       </Nav.Link>
     );
@@ -57,7 +56,7 @@ export default function Header() {
         className="mb-2 mb-md-5"
       >
         <Container>
-          <Navbar.Brand href="#home">
+          <Navbar.Brand as={Link} to="/">
             <img
               src={brandLogo}
               alt="logo"

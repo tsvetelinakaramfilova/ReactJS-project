@@ -7,6 +7,7 @@ import ArticleList from "./components/article-list/ArticleList";
 import LogIn from "./components/login/LogIn";
 import Registration from "./components/registration/Registration";
 import UserContext from "./contexts/UserContext";
+import ArticleDetails from "./components/article-details/ArticleDetails";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -28,6 +29,7 @@ function App() {
             <Route path="/login" element={<LogIn />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/articles" element={<ArticleList />} />
+            <Route path="/articles/details/:articleId" element={<ArticleDetails />} />
           </Routes>
         </main>
         <Footer />

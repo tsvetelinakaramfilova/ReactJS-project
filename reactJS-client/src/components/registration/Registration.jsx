@@ -127,7 +127,7 @@ export default function Registration() {
               </Form>
               <div className="col-12">
                 <p className="m-0 text-secondary text-center">
-                  Go to{" "}
+                  Have an account?{" "}
                   <Link to="/login" className="link-dark text-decoration-none">
                     Log In
                   </Link>

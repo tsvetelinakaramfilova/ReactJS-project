@@ -3,6 +3,7 @@
   color: black;
 }
 
-.link-item:hover {
-  color: #778899;
+div.itemSvg a > svg {
+  width: 15px;
+  height: 15px;
 }

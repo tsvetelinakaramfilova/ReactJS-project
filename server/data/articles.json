@@ -1,107 +1,75 @@
 {
-    "articles": [
-      {
-        "article_id": "61731621b7c322000963d550",
-        "name": "An Introduction to JSON",
-        "images": [
-          "https://media.geeksforgeeks.org/wp-content/uploads/20191206140918/JSON6.png",
-          "https://coursework.vschool.io/content/images/2016/04/json-banner-750x220.jpg"
-        ],
-        "description": "This article provides a comprehensive introduction to JSON (JavaScript Object Notation).",
-        "dateOfEntry": "2022-10-20T08:00:00.000Z",
+    "4606571e-6295-45e6-9927-3cfe73ba9de1": {
+        "name": "Title",
+        "description": "Body",
         "timeRead": 10,
-        "tags": ["JSON", "JavaScript", "Data Serialization"],
+        "_id": "4606571e-6295-45e6-9927-3cfe73ba9de1"
+    },
+    "baa4d359-991f-454b-997c-83575de762c3": {
+        "name": "Title2",
+        "description": "Body",
+        "timeRead": 15,
+        "_id": "baa4d359-991f-454b-997c-83575de762c3"
+    },
+    "d2df13be-baea-4a6f-b040-77a7d60dfae1": {
+        "name": "An Introduction to JSON",
+        "description": "This article provides a comprehensive introduction to JSON (JavaScript Object Notation).",
+        "images": [
+            "https://media.geeksforgeeks.org/wp-content/uploads/20191206140918/JSON6.png",
+            "https://coursework.vschool.io/content/images/2016/04/json-banner-750x220.jpg"
+        ],
+        "timeRead": 15,
+        "dateOfEntry": "2022-10-20T08:00:00.000Z",
+        "tags": [
+            "JSON",
+            "JavaScript",
+            "Data Serialization"
+        ],
         "comments": [
-          {
-            "date": "2022-10-20T08:00:00.000Z",
-            "text": "Great product! I highly recommend it.",
-            "user": {
-              "firstName": "John",
-              "lastName": "Doe",
-              "email": "johndoe@example.com",
-              "password": "password123"
+            {
+                "date": "2022-10-20T08:00:00.000Z",
+                "text": "Great product! I highly recommend it.",
+                "user": {
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "email": "johndoe@example.com",
+                    "password": "password123"
+                }
             }
-          },
-          {
-            "date": "2022-11-20T08:00:00.000Z",
-            "text": "Excellent service! The product arrived on time and exceeded my expectations.",
-            "user": {
-              "firstName": "Alice",
-              "lastName": "Smith",
-              "email": "alice.smith@example.com",
-              "password": "password123"
-            }
-          }
-        ]
-      },
-      {
-        "article_id": "61731621b7c322000963d551",
+        ],
+        "_id": "d2df13be-baea-4a6f-b040-77a7d60dfae1"
+    },
+    "de4ac57c-922f-41fe-8c4e-816d4a00be19": {
         "name": "Understanding JavaScript",
         "images": [
-          "https://media.geeksforgeeks.org/wp-content/uploads/20200106140918/JavaScript.png",
-          "https://coursework.vschool.io/content/images/2017/04/javascript-banner.jpg"
+            "https://media.geeksforgeeks.org/wp-content/uploads/20200106140918/JavaScript.png",
+            "https://coursework.vschool.io/content/images/2017/04/javascript-banner.jpg"
         ],
         "description": "This article provides a comprehensive understanding of JavaScript.",
         "dateOfEntry": "2022-11-20T08:00:00.000Z",
         "timeRead": 15,
-        "tags": ["JavaScript", "Programming", "Web Development"],
-        "comments": [
-          {
-            "date": "2022-11-20T08:00:00.000Z",
-            "text": "Very informative article.",
-            "user": {
-              "firstName": "Bob",
-              "lastName": "Johnson",
-              "email": "bobjohnson@example.com",
-              "password": "password123"
-            }
-          },
-          {
-            "date": "2022-12-20T08:00:00.000Z",
-            "text": "Helped me a lot in understanding JavaScript.",
-            "user": {
-              "firstName": "Charlie",
-              "lastName": "Brown",
-              "email": "charlie.brown@example.com",
-              "password": "password123"
-            }
-          }
-        ]
-      },
-      {
-        "article_id": "61731621b7c322000963d552",
+        "tags": [
+            "JavaScript",
+            "Programming",
+            "Web Development"
+        ],
+        "_id": "de4ac57c-922f-41fe-8c4e-816d4a00be19"
+    },
+    "bc3bccb8-7b19-4204-9f61-5df68567142d": {
         "name": "A Guide to HTML",
         "images": [
-          "https://media.geeksforgeeks.org/wp-content/uploads/20200206140918/HTML.png",
-          "https://coursework.vschool.io/content/images/2017/04/html-banner.jpg"
+            "https://media.geeksforgeeks.org/wp-content/uploads/20200206140918/HTML.png",
+            "https://coursework.vschool.io/content/images/2017/04/html-banner.jpg"
         ],
         "description": "This article serves as a guide to HTML.",
         "dateOfEntry": "2022-12-20T08:00:00.000Z",
         "timeRead": 20,
-        "tags": ["HTML", "Web Development", "Markup Language"],
-        "comments": [
-          {
-            "date": "2022-12-20T08:00:00.000Z",
-            "text": "Great guide for beginners.",
-            "user": {
-              "firstName": "David",
-              "lastName": "Williams",
-              "email": "david.williams@example.com",
-              "password": "password123"
-            }
-          },
-          {
-            "date": "2023-01-20T08:00:00.000Z",
-            "text": "Well explained!",
-            "user": {
-              "firstName": "Emma",
-              "lastName": "Taylor",
-              "email": "emma.taylor@example.com",
-              "password": "password123"
-            }
-          }
-        ]
-      }
-    ]
+        "tags": [
+            "HTML",
+            "Web Development",
+            "Markup Language"
+        ],
+        "_id": "bc3bccb8-7b19-4204-9f61-5df68567142d"
+    }
   }
   

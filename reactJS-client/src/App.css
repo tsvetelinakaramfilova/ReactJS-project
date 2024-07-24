@@ -1,4 +1,15 @@
-input:focus {
+input:focus,
+textarea:focus {
   border-color: #28a745 !important;
   box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+a > svg {
+  width: 30px;
+  height: 30px;
+}
+
+a > svg:hover,
+a:hover {
+  color: #778899;
 }
