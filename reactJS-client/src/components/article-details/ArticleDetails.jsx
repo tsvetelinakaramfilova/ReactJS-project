@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { Carousel } from "react-bootstrap";
 import { TiArrowBack } from "react-icons/ti";
-import articlesApi from "../../api/articles-api";
+import articlesApi from "../../api/articlesApi";
 import ArticleTag from "../article-tag/ArticleTag";
 import EditRemoveButton from "../edit-remove-button/EditRemoveButton";
 import CommentSection from "../comment-section/CommentSection";

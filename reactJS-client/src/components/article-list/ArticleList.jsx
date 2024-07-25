@@ -1,11 +1,10 @@
-import { useFetch } from "../../hooks/useFetch";
 import { Link } from "react-router-dom";
-import articlesApi from "../../api/articles-api";
+import { useGetAllArticles } from "../../hooks/useArticles";
 import ArticleListItem from "./article-list-item/ArticleListItem";
 import Loader from "../loader/Loader";
 
 export default function ArticleList() {
-  const { data: articles, isFetching } = useFetch(articlesApi.getAll(), []);
+  const { articles, isFetching } = useGetAllArticles();
   // console.log(articles);
 
   return (
