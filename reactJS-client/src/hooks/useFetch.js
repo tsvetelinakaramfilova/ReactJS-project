@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useFetch(resultItem, initalData) {
+export function useFetch(resultItem, initalData, resetUseEffect) {
   const [data, setData] = useState(initalData);
   const [isFetching, setIsFetching] = useState(true);
 
@@ -9,17 +9,18 @@ export function useFetch(resultItem, initalData) {
     const abortController = new AbortController();
 
     (async () => {
-      const result = await resultItem
+      const result = await resultItem;
 
       setData(result);
       setIsFetching(false);
     })();
 
     return () => abortController.abort();
-  }, []);
+  }, [resetUseEffect]);
 
   return {
     data,
-    isFetching
+    setData,
+    isFetching,
   };
 }

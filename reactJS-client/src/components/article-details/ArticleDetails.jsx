@@ -1,8 +1,7 @@
 import { useParams, Link } from "react-router-dom";
-import { useFetch } from "../../hooks/useFetch";
+import { useGetOneArticle } from "../../hooks/useArticles";
 import { Carousel } from "react-bootstrap";
 import { TiArrowBack } from "react-icons/ti";
-import articlesApi from "../../api/articlesApi";
 import ArticleTag from "../article-tag/ArticleTag";
 import EditRemoveButton from "../edit-remove-button/EditRemoveButton";
 import CommentSection from "../comment-section/CommentSection";
@@ -10,16 +9,7 @@ import Loader from "../loader/Loader";
 
 export default function ArticleDetails() {
   const { articleId } = useParams();
-
-  //   const { data: article, isFetching } = useFetch(
-  //     `http://localhost:3030/jsonstore/articles/${articleId}`,
-  //     {}
-  //   );
-
-  const { data: article, isFetching } = useFetch(
-    articlesApi.getOne(articleId),
-    {}
-  );
+  const { article, isFetching } = useGetOneArticle(articleId);
 
   const imgArt = article.images || [];
 

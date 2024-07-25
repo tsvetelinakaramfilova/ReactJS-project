@@ -9,3 +9,17 @@ export function useGetAllArticles() {
     isFetching,
   };
 }
+
+export function useGetOneArticle(articleId) {
+  const {
+    data: article,
+    setData: setArticle,
+    isFetching,
+  } = useFetch(articlesApi.getOne(articleId), {}, articleId);
+
+  return {
+    article,
+    setArticle,
+    isFetching,
+  };
+}
