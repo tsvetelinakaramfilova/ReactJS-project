@@ -1,29 +1,43 @@
-import { useContext } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import brandLogo from "../../assets/Logo_f.png";
 import { useForm } from "../../hooks/useForm";
+import { useRegister } from "../../hooks/useAuth";
+import ErrorMessage from "../error-message/ErrorMessage";
 
 export default function Registration() {
+  const register = useRegister();
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
+
   const initialValues = {
-    firstName: "",
-    lastName: "",
     email: "",
     password: "",
     rePassword: "",
   };
 
-  const navigate = useNavigate();
+  const registerSubmitHandler = async ({ email, password, rePassword }) => {
+    if (password !== rePassword) {
+      return setError("Password mismatch!");
+    }
 
-  const registerSubmitHandler = ({ email, password }) => {
-    register(firstName, lastName, email, password, rePassword);
-    navigate("/");
+    try {
+      await register(email, password);
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const { changeHandler, submitHandler, values } = useForm(
     initialValues,
     registerSubmitHandler
   );
+
+  const clearError = () => {
+    setError(null);
+  };
 
   return (
     <div className="container">
@@ -42,36 +56,6 @@ export default function Registration() {
               </div>
 
               <Form onSubmit={submitHandler}>
-                <Form.Group className="mb-3">
-                  <Form.Label htmlFor="firstName" className="form-label">
-                    First Name
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    className="form-control"
-                    value={values.firstName}
-                    name="firstName"
-                    id="firstName"
-                    placeholder="Alina"
-                    onChange={changeHandler}
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label htmlFor="lastName" className="form-label">
-                    Last Name
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    className="form-control"
-                    value={values.lastName}
-                    name="lastName"
-                    id="lastName"
-                    placeholder="Ivanova"
-                    onChange={changeHandler}
-                    required
-                  />
-                </Form.Group>
                 <Form.Group className="mb-3">
                   <Form.Label htmlFor="email" className="form-label">
                     Email
@@ -131,6 +115,9 @@ export default function Registration() {
                   </Link>
                 </p>
               </div>
+              {error && (
+                <ErrorMessage message={error} clearError={clearError} />
+              )}
             </div>
           </div>
         </div>

@@ -11,6 +11,16 @@ const login = async (email, password) => {
   return authData;
 };
 
+const register = async (email, password) => {
+  const registerData = await requester.post(`${BASE_URL}/register`, {
+    email,
+    password,
+  });
+
+  return registerData;
+};
+
 export default {
   login,
+  register,
 };
