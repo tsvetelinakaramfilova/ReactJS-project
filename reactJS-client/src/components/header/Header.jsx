@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import brandLogo from "../../assets/Logo_f.png";
+import { AuthContext } from "../../contexts/authContext";
 
 export default function Header() {
-  const isAuthenticated = false;
+  const { isAuthenticated } = useContext(AuthContext);
 
   const navigation = [
     {

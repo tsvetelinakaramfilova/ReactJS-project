@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/authContext";
 
 export default function Footer() {
-  const isAuthenticated = false;
+  const { isAuthenticated } = useContext(AuthContext);
 
   const informationLink = [
     {
