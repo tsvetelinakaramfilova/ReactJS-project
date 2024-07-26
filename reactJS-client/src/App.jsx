@@ -13,11 +13,10 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const login = (username, password) => {
-      // TODO: validate password
+    // TODO: validate password
 
-      setCurrentUser({ username });
-  }
-
+    setCurrentUser({ username });
+  };
 
   return (
     <>
@@ -29,7 +28,10 @@ function App() {
             <Route path="/login" element={<LogIn />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/articles" element={<ArticleList />} />
-            <Route path="/articles/details/:articleId" element={<ArticleDetails />} />
+            <Route
+              path="/articles/details/:articleId"
+              element={<ArticleDetails />}
+            />
           </Routes>
         </main>
         <Footer />

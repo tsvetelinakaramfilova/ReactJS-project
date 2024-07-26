@@ -72,7 +72,7 @@ export default function Footer() {
             >
               <svg className="bi" width="30" height="24"></svg>
             </Link>
-            <span className="text-muted">© 2023</span>
+            <span className="text-muted">© 2024</span>
           </div>
 
           <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">

@@ -1,4 +1,4 @@
-export default async function requester(method, url, data) {
+async function requester(method, url, data) {
   const options = {};
 
   if (method !== "GET") {
@@ -14,12 +14,23 @@ export default async function requester(method, url, data) {
   }
 
   const response = await fetch(url, options);
-  const result = response.json();
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw result;
+  }
 
   return result;
 }
 
-export const get = requester.bind(null, "GET");
-export const post = requester.bind(null, "POST");
-export const put = requester.bind(null, "PUT");
-export const remove = requester.bind(null, "DELETE");
+const get = requester.bind(null, "GET");
+const post = requester.bind(null, "POST");
+const put = requester.bind(null, "PUT");
+const remove = requester.bind(null, "DELETE");
+
+export default {
+  get,
+  post,
+  put,
+  remove,
+};

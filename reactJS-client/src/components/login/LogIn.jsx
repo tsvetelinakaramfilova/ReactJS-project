@@ -1,22 +1,29 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import brandLogo from "../../assets/Logo_f.png";
 import { useForm } from "../../hooks/useForm";
 import UserContext from "../../contexts/UserContext";
+import { useLogin } from "../../hooks/useAuth";
+import ErrorMessage from "../error-message/ErrorMessage";
 
 export default function LogIn() {
+  const navigate = useNavigate();
+  const login = useLogin();
+  const [error, setError] = useState(null);
+
   const initialValues = {
     email: "",
     password: "",
   };
 
-  const { login } = useContext(UserContext);
-  const navigate = useNavigate();
-
-  const loginSubmitHandler = ({ email, password }) => {
-    login(email, password);
-    navigate("/");
+  const loginSubmitHandler = async ({ email, password }) => {
+    try {
+      await login(email, password);
+      navigate("/");
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   const { changeHandler, submitHandler, values } = useForm(
@@ -24,11 +31,14 @@ export default function LogIn() {
     loginSubmitHandler
   );
 
+  const clearError = () => {
+    setError(null);
+  };
+
   return (
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
-          {/* shadow-sm */}
           <div className="card border border-light-subtle rounded-3 shadow bg-gradient">
             <div className="card-body p-3 p-md-4 p-xl-5">
               <div className="text-center mb-5">
@@ -88,6 +98,7 @@ export default function LogIn() {
                   </Link>
                 </p>
               </div>
+              {error && <ErrorMessage message={error} clearError={clearError} />}
             </div>
           </div>
         </div>
