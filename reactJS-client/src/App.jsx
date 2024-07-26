@@ -6,21 +6,27 @@ import Footer from "./components/footer/Footer";
 import ArticleList from "./components/article-list/ArticleList";
 import LogIn from "./components/login/LogIn";
 import Registration from "./components/registration/Registration";
-import UserContext from "./contexts/UserContext";
 import ArticleDetails from "./components/article-details/ArticleDetails";
+import { AuthContext } from "./contexts/authContext";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({});
+  const [authState, setAuthState] = useState({});
 
-  const login = (username, password) => {
-    // TODO: validate password
+  const changeAuthState = (state) => {
+    setAuthState(state);
+  };
 
-    setCurrentUser({ username });
+  const contextData = {
+    userId: authState._id,
+    email: authState.email,
+    accessToken: authState.accessToken,
+    isAuthenticated: !!authState.email,
+    changeAuthState,
   };
 
   return (
     <>
-      <UserContext.Provider value={{ user: currentUser, login }}>
+      <AuthContext.Provider value={contextData}>
         <Header />
         <main className="container footer mt-auto py-3">
           <Routes>
@@ -35,7 +41,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
-      </UserContext.Provider>
+      </AuthContext.Provider>
     </>
   );
 }

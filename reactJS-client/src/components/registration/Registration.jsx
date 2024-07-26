@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import brandLogo from "../../assets/Logo_f.png";
-import UserContext from "../../contexts/UserContext";
 import { useForm } from "../../hooks/useForm";
 
 export default function Registration() {
@@ -14,7 +13,6 @@ export default function Registration() {
     rePassword: "",
   };
 
-  const { register } = useContext(UserContext);
   const navigate = useNavigate();
 
   const registerSubmitHandler = ({ email, password }) => {
