@@ -31,7 +31,7 @@ export default function Header() {
 
   const navUser = [
     {
-      to: "/addArticle",
+      to: "/articles/create",
       title: "Add Article",
     },
     {

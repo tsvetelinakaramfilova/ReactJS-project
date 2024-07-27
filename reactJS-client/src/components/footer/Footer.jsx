@@ -30,7 +30,7 @@ export default function Footer() {
 
   const navUser = [
     {
-      to: "/addArticle",
+      to: "/articles/create",
       title: "Add Article",
     },
     {

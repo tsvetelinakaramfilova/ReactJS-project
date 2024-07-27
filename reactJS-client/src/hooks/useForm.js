@@ -1,24 +1,47 @@
 import { useState } from "react";
 
 export function useForm(initialValues, submitCallback) {
-    const [values, setValues] = useState(initialValues);
+  const [values, setValues] = useState(initialValues);
 
-    const changeHandler = (e) => {
-        setValues(prevState => ({
-            ...prevState,
-            [e.target.name]: e.target.value,
-        }));
-    };
+  const changeHandler = (e) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-    const submitHandler = (e) => {
-        e.preventDefault();
+  const arrayChangeHandler = (index, name, value) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [name]: prevState[name].map((item, i) => (i === index ? value : item)),
+    }));
+  };
 
-        submitCallback(values);
-    };
+  const addArrayItem = (name) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [name]: [...prevState[name], ""],
+    }));
+  };
 
-    return {
-        values,
-        changeHandler,
-        submitHandler,
-    };
+  const removeArrayItem = (index, name) => {
+    setValues((prevState) => ({
+      ...prevState,
+      [name]: prevState[name].filter((_, i) => i !== index),
+    }));
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    submitCallback(values);
+  };
+
+  return {
+    values,
+    changeHandler,
+    arrayChangeHandler,
+    addArrayItem,
+    removeArrayItem,
+    submitHandler,
+  };
 }

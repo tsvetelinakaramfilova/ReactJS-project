@@ -9,7 +9,7 @@ import ErrorMessage from "../error-message/ErrorMessage";
 export default function LogIn() {
   const navigate = useNavigate();
   const login = useLogin();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState();
 
   const initialValues = {
     email: "",

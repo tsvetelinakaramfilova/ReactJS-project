@@ -23,3 +23,11 @@ export function useGetOneArticle(articleId) {
     isFetching,
   };
 }
+
+export function useCreateArticle() {
+  const articleCreateHandler = (articleData) => {
+    articlesApi.create(articleData);
+  };
+
+  return articleCreateHandler;
+}

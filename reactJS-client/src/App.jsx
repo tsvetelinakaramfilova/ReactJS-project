@@ -4,10 +4,11 @@ import { Route, Routes } from "react-router-dom";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import ArticleList from "./components/article-list/ArticleList";
-import LogIn from "./components/login/LogIn";
+import LogIn from "./components/login/Login";
 import Registration from "./components/registration/Registration";
 import ArticleDetails from "./components/article-details/ArticleDetails";
 import { AuthContext } from "./contexts/authContext";
+import ArticleCreate from "./components/article-create/ArticleCreate";
 
 function App() {
   const [authState, setAuthState] = useState({});
@@ -38,6 +39,8 @@ function App() {
               path="/articles/details/:articleId"
               element={<ArticleDetails />}
             />
+
+            <Route path="/articles/create" element={<ArticleCreate />} />
           </Routes>
         </main>
         <Footer />
