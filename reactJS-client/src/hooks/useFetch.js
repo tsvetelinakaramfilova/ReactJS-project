@@ -9,10 +9,12 @@ export function useFetch(resultItem, initalData, resetUseEffect) {
     const abortController = new AbortController();
 
     (async () => {
-      const result = await resultItem;
-
-      setData(result);
-      setIsFetching(false);
+      try {
+        const result = await resultItem;
+        setData(result);
+      } finally {
+        setIsFetching(false);
+      }
     })();
 
     return () => abortController.abort();

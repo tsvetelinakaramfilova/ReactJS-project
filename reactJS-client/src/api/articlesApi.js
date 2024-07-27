@@ -15,10 +15,10 @@ const getOne = async (articleId) => {
   return result;
 };
 
-const create = (articleData) => requester.post(`${BASE_URL}`, articleData)
+const create = (articleData) => requester.post(`${BASE_URL}`, articleData);
 
 export default {
   getAll,
   getOne,
-  create
+  create,
 };
