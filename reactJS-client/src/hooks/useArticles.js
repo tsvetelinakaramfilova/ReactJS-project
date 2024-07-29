@@ -25,9 +25,7 @@ export function useGetOneArticle(articleId) {
 }
 
 export function useCreateArticle() {
-  const articleCreateHandler = (articleData) => {
-    articlesApi.create(articleData);
-  };
+  const articleCreateHandler = (articleData) => articlesApi.create(articleData);
 
   return articleCreateHandler;
 }

@@ -22,8 +22,8 @@ export default function ArticleCreate() {
 
   const createArticleSubmitHandler = async (values) => {
     try {
-      //   console.log("Article data:", values);
       const { _id: articleId } = await createArticle(values);
+
       navigate(`/articles/details/${articleId}`);
     } catch (err) {
       setError(err.message);
