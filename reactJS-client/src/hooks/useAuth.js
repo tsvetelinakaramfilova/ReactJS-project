@@ -31,3 +31,14 @@ export const useRegister = () => {
 
   return registerHandler;
 };
+
+export const useLogout = () => {
+  const { logout: localLogout } = useAuthContext();
+
+  const logoutHandler = async () => {
+    await authApi.logout();
+    localLogout();
+  };
+
+  return logoutHandler;
+};

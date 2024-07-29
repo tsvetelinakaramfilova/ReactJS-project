@@ -20,7 +20,10 @@ const register = async (email, password) => {
   return registerData;
 };
 
+const logout = () => requester.get(`${BASE_URL}/logout`);
+
 export default {
   login,
   register,
+  logout,
 };

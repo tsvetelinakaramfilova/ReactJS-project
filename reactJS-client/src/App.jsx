@@ -6,6 +6,7 @@ import Footer from "./components/footer/Footer";
 import ArticleList from "./components/article-list/ArticleList";
 import LogIn from "./components/login/Login";
 import Registration from "./components/registration/Registration";
+import LogOut from "./components/logout/Logout";
 import ArticleDetails from "./components/article-details/ArticleDetails";
 import ArticleCreate from "./components/article-create/ArticleCreate";
 
@@ -18,6 +19,7 @@ function App() {
           {/* <Route path='/' /> */}
           <Route path="/login" element={<LogIn />} />
           <Route path="/registration" element={<Registration />} />
+          <Route path="/logout" element={<LogOut />} />
           <Route path="/articles" element={<ArticleList />} />
           <Route
             path="/articles/details/:articleId"
