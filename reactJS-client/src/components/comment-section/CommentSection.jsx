@@ -10,7 +10,7 @@ import ErrorMessage from "../error-message/ErrorMessage";
 
 export default function CommentSection() {
   const { articleId } = useParams();
-  const { isAuthenticated, email } = useAuthContext();
+  const { userId, email, isAuthenticated } = useAuthContext();
   const [error, setError] = useState();
 
   const [comments, setComments] = useGetAllComments(articleId);
@@ -72,10 +72,12 @@ export default function CommentSection() {
               <div
                 className={`${styles["itemSvg"]} text-end my-1 text-grey-600`}
               >
-                <EditRemoveButton
-                  editTo={"/articleForm"}
-                  deleteToSucces={"/articles"}
-                />
+                {userId === comment._ownerId && (
+                  <EditRemoveButton
+                    editTo={"/articleForm"}
+                    deleteToSucces={"/articles"}
+                  />
+                )}
               </div>
             </div>
           </div>

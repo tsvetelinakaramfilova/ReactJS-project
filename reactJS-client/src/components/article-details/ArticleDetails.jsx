@@ -10,10 +10,11 @@ import Loader from "../loader/Loader";
 
 export default function ArticleDetails() {
   const { articleId } = useParams();
-  const { isAuthenticated } = useAuthContext();
+  const { isAuthenticated, userId } = useAuthContext();
   const { article, isFetching } = useGetOneArticle(articleId);
 
   const imgArt = article.images || [];
+  const isOwner = userId === article._ownerId;  
 
   return isFetching ? (
     <Loader />
@@ -25,10 +26,12 @@ export default function ArticleDetails() {
           <TiArrowBack />
         </Link>
         {/* Only author see these: */}
-        <EditRemoveButton
-          editTo={"/articleForm"}
-          deleteToSucces={"/articles"}
-        />
+        {isOwner && (
+          <EditRemoveButton
+            editTo={"/articleForm"}
+            deleteToSucces={"/articles"}
+          />
+        )}
       </div>
       <div className="page-title">
         <div className="row">
@@ -72,7 +75,7 @@ export default function ArticleDetails() {
         </div>
       </div>
       <div>
-        <CommentSection/>
+        <CommentSection />
       </div>
     </div>
   );
