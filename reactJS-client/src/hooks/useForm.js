@@ -34,6 +34,7 @@ export function useForm(initialValues, submitCallback) {
   const submitHandler = (e) => {
     e.preventDefault();
     submitCallback(values);
+    setValues(initialValues);
   };
 
   return {

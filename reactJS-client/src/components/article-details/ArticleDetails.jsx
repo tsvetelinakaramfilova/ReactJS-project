@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useGetOneArticle } from "../../hooks/useArticles";
+import { useAuthContext } from "../../contexts/authContext";
 import { Carousel } from "react-bootstrap";
 import { TiArrowBack } from "react-icons/ti";
 import ArticleTag from "../article-tag/ArticleTag";
@@ -9,11 +10,10 @@ import Loader from "../loader/Loader";
 
 export default function ArticleDetails() {
   const { articleId } = useParams();
+  const { isAuthenticated } = useAuthContext();
   const { article, isFetching } = useGetOneArticle(articleId);
 
   const imgArt = article.images || [];
-
-  console.log(article);
 
   return isFetching ? (
     <Loader />
@@ -61,7 +61,7 @@ export default function ArticleDetails() {
           <div className="rounded-pill ms-auto text-end mt-3 mb-1">
             <div className="text-end text-muted">
               <p>
-                From {new Date(article.dateOfEntry).toLocaleDateString()}, Read{" "}
+                From {new Date(article._createdOn).toLocaleDateString()}, Read{" "}
                 {article.timeRead} min.
               </p>
             </div>
@@ -72,7 +72,7 @@ export default function ArticleDetails() {
         </div>
       </div>
       <div>
-        <CommentSection comments={article.comments} />
+        <CommentSection/>
       </div>
     </div>
   );
