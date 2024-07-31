@@ -9,6 +9,7 @@ import Registration from "./components/registration/Registration";
 import LogOut from "./components/logout/Logout";
 import ArticleDetails from "./components/article-details/ArticleDetails";
 import ArticleCreate from "./components/article-create/ArticleCreate";
+import NotFound from "./components/not-found/NotFound";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
           />
 
           <Route path="/articles/create" element={<ArticleCreate />} />
+
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
