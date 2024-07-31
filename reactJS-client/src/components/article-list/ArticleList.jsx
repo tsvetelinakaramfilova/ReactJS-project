@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import { useGetAllArticles } from "../../hooks/useArticles";
 import ArticleListItem from "./article-list-item/ArticleListItem";
 import Loader from "../loader/Loader";
+import { useAuthContext } from "../../contexts/authContext";
 
 export default function ArticleList() {
   const { articles, isFetching } = useGetAllArticles();
+  const { isAuthenticated } = useAuthContext();
   // console.log(articles);
 
   return (
@@ -14,9 +16,11 @@ export default function ArticleList() {
       ) : articles.length <= 0 ? (
         <div className="text-center mx-auto">
           <h5>No articles yet</h5>
-          <Link to="/articles/create" className="btn btn-dark px-5">
-            Create article
-          </Link>
+          {isAuthenticated && (
+            <Link to="/articles/create" className="btn btn-dark px-5">
+              Create article
+            </Link>
+          )}
         </div>
       ) : (
         articles.map((article) => {

@@ -10,6 +10,15 @@ export function useGetAllArticles() {
   };
 }
 
+export function useGetLastThirdArticles() {
+  const { data: articles, isFetching } = useFetch(articlesApi.getLastThird(), []);
+
+  return {
+    articles,
+    isFetching,
+  };
+}
+
 export function useGetOneArticle(articleId) {
   const {
     data: article,
