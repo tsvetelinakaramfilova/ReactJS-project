@@ -1,20 +1,24 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "../../hooks/useForm";
-import { useCreateComment, useGetAllComments } from "../../hooks/useComments";
+import {
+  useCreateComment,
+  useGetAllComments,
+  useRemoveComment,
+} from "../../hooks/useComments";
 import { useAuthContext } from "../../contexts/authContext";
 import { Button, Form } from "react-bootstrap";
-import EditRemoveButton from "../edit-remove-button/EditRemoveButton";
 import styles from "./CommentSection.module.css";
+import CommentRemoveButton from "../comment-remove-button/CommentRemoveButton";
 import ErrorMessage from "../error-message/ErrorMessage";
 
 export default function CommentSection() {
   const { articleId } = useParams();
   const { userId, email, isAuthenticated } = useAuthContext();
   const [error, setError] = useState();
-
   const [comments, setComments] = useGetAllComments(articleId);
   const createComment = useCreateComment();
+  const deleteComment = useRemoveComment();
 
   const initialValues = {
     commentText: "",
@@ -23,10 +27,21 @@ export default function CommentSection() {
   const commentSubmitHandler = async ({ commentText }) => {
     try {
       const newComment = await createComment(articleId, commentText);
-      setComments((oldComment) => [
-        ...oldComment,
+      setComments((oldComments) => [
+        ...oldComments,
         { ...newComment, author: { email } },
       ]);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await deleteComment(commentId);
+      setComments((oldComments) =>
+        oldComments.filter((comment) => comment._id !== commentId)
+      );
     } catch (err) {
       setError(err.message);
     }
@@ -40,8 +55,6 @@ export default function CommentSection() {
   const clearError = () => {
     setError(null);
   };
-
-  // console.log(comments);
 
   return (
     <div className="my-4">
@@ -63,7 +76,7 @@ export default function CommentSection() {
           <div key={comment._id} className="card my-3 py-2 px-3">
             <div className="flex-grow-1 d-flex align-items-center">
               <h5 className="card-title ms-1 mb-0">{comment.author.email}</h5>
-              <div className="ms-auto text-end my-2 text-greay-600 star">
+              <div className="ms-auto text-end my-2 text-grey-600 star">
                 {new Date(comment._createdOn).toLocaleDateString()}
               </div>
             </div>
@@ -73,9 +86,9 @@ export default function CommentSection() {
                 className={`${styles["itemSvg"]} text-end my-1 text-grey-600`}
               >
                 {userId === comment._ownerId && (
-                  <EditRemoveButton
-                    editTo={"/articleForm"}
-                    deleteToSucces={"/articles"}
+                  <CommentRemoveButton
+                    idDeleteComment={comment._id}
+                    deleteMethod={handleDeleteComment}
                   />
                 )}
               </div>

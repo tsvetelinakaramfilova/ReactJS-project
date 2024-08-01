@@ -15,7 +15,10 @@ const getAll = (articleId) => {
 const create = (articleId, commentText) =>
   requester.post(BASE_URL, { articleId, commentText });
 
+const remove = (commentId) => requester.remove(`${BASE_URL}/${commentId}`);
+
 export default {
   getAll,
   create,
+  remove,
 };

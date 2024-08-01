@@ -50,8 +50,8 @@ export default function ArticleListItem({ article }) {
               >
                 {userId === article._ownerId && (
                   <EditRemoveButton
-                    editTo={"/articleForm"}
-                    deleteToSucces={"/articles"}
+                    editLink={"/articleForm"}
+                    deleteItem={"/articles"}
                   />
                 )}
               </div>

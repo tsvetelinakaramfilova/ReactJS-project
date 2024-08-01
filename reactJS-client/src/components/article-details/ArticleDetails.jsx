@@ -14,7 +14,7 @@ export default function ArticleDetails() {
   const { article, isFetching } = useGetOneArticle(articleId);
 
   const imgArt = article.images || [];
-  const isOwner = userId === article._ownerId;  
+  const isOwner = userId === article._ownerId;
 
   return isFetching ? (
     <Loader />
@@ -28,8 +28,8 @@ export default function ArticleDetails() {
         {/* Only author see these: */}
         {isOwner && (
           <EditRemoveButton
-            editTo={"/articleForm"}
-            deleteToSucces={"/articles"}
+            editLink={"/articleForm"}
+            deleteItem={"/articles"}
           />
         )}
       </div>

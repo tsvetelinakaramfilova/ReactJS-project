@@ -1,15 +1,11 @@
-import { MdOutlineEditNote, MdOutlineBookmarkRemove } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { MdOutlineBookmarkRemove } from "react-icons/md";
+import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ErrorMessage from "../error-message/ErrorMessage";
 
-export default function EditRemoveButton({
-  idDeleteItem,
-  editLink,
-  deleteItem,
-}) {
+export default function CommentRemoveButton({ idDeleteComment, deleteMethod }) {
   const [show, setShow] = useState(false);
   const [error, setError] = useState();
 
@@ -18,7 +14,7 @@ export default function EditRemoveButton({
 
   const onClickDelete = async () => {
     try {
-      await deleteItem(idDeleteItem);
+      await deleteMethod(idDeleteComment);
     } catch (err) {
       setError(err.message);
     }
@@ -30,9 +26,6 @@ export default function EditRemoveButton({
 
   return (
     <div>
-      <Link to={editLink} className="text-dark btn-outline-secondary">
-        <MdOutlineEditNote className="me-5" />
-      </Link>
       <Link onClick={handleShow} className="text-dark btn-outline-secondary">
         <MdOutlineBookmarkRemove />
       </Link>
@@ -44,7 +37,7 @@ export default function EditRemoveButton({
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Delete Item</Modal.Title>
+          <Modal.Title>Delete comment</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are you sure?</Modal.Body>
         <Modal.Footer>
