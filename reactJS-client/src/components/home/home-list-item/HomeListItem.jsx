@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function HomeListItem({ article }) {
-  const imageSrc =
-    article.images && article.images.length > 0
-      ? article.images[0]
-      : "https://i.ibb.co/kMj0gfX/horizontel-logo.jpg";
+  const imageSrc = article.images[0];
 
   return (
     <div className="col">

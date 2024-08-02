@@ -4,16 +4,17 @@ import { useAuthContext } from "../../contexts/authContext";
 import { Carousel } from "react-bootstrap";
 import { TiArrowBack } from "react-icons/ti";
 import ArticleTag from "../article-tag/ArticleTag";
-import EditRemoveButton from "../edit-remove-button/EditRemoveButton";
+import ArticleEditRemoveButton from "../article-edit-remove-button/ArticleEditRemoveButton";
 import CommentSection from "../comment-section/CommentSection";
 import Loader from "../loader/Loader";
+import horizontelLogo from "../../assets/horizontel_logo.jpg";
 
 export default function ArticleDetails() {
   const { articleId } = useParams();
   const { isAuthenticated, userId } = useAuthContext();
   const { article, isFetching } = useGetOneArticle(articleId);
 
-  const imgArt = article.images || [];
+  const imgArt = article?.images?.filter((img) => img.trim() !== "") || [];
   const isOwner = userId === article._ownerId;
 
   return isFetching ? (
@@ -27,9 +28,9 @@ export default function ArticleDetails() {
         </Link>
         {/* Only author see these: */}
         {isOwner && (
-          <EditRemoveButton
+          <ArticleEditRemoveButton
             editLink={`/articles/edit/${articleId}`}
-            deleteItem={"/articles"}
+            deleteIdItem={articleId}
           />
         )}
       </div>
@@ -55,7 +56,7 @@ export default function ArticleDetails() {
               <Carousel.Item>
                 <img
                   className="w-100 rounded"
-                  src="https://i.ibb.co/kMj0gfX/horizontel-logo.jpg"
+                  src={horizontelLogo}
                   alt="default"
                 />
               </Carousel.Item>

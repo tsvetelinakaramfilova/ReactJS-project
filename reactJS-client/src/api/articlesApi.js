@@ -32,10 +32,13 @@ const create = (articleData) => requester.post(`${BASE_URL}`, articleData);
 const edit = (articleId, articleData) =>
   requester.put(`${BASE_URL}/${articleId}`, articleData);
 
+const remove = (articleId) => requester.remove(`${BASE_URL}/${articleId}`);
+
 export default {
   getAll,
   getLastThird,
   getOne,
   create,
   edit,
+  remove,
 };

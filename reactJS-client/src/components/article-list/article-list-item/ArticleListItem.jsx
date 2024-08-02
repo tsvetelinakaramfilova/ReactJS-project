@@ -1,16 +1,9 @@
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../../../contexts/authContext";
 import styles from "./ArticleListItem.module.css";
 import ArticleTag from "../../article-tag/ArticleTag";
-import EditRemoveButton from "../../edit-remove-button/EditRemoveButton";
 
 export default function ArticleListItem({ article }) {
-  const imageSrc =
-    article.images && article.images.length > 0
-      ? article.images[0]
-      : "https://i.ibb.co/kMj0gfX/horizontel-logo.jpg";
-
-  const { userId } = useAuthContext();
+  const imageSrc = article.images[0];
 
   return (
     <>
@@ -44,16 +37,6 @@ export default function ArticleListItem({ article }) {
                   {article.description}
                 </p>
               </Link>
-              <div
-                className={`${styles["itemSvg"]} d-flex flex-row-reverse bd-highlight mb-3`}
-              >
-                {userId === article._ownerId && (
-                  <EditRemoveButton
-                    editLink={`/articles/edit/${article._id}`}
-                    deleteItem={"/articles"}
-                  />
-                )}
-              </div>
             </div>
           </div>
         </div>

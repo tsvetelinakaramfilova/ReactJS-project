@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export function useForm(initialValues, submitCallback) {
   const [values, setValues] = useState(initialValues);
@@ -34,6 +34,7 @@ export function useForm(initialValues, submitCallback) {
   const submitHandler = (e) => {
     e.preventDefault();
     submitCallback(values);
+    setValues(initialValues);
   };
 
   return {

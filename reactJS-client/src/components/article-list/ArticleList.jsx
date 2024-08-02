@@ -7,7 +7,6 @@ import { useAuthContext } from "../../contexts/authContext";
 export default function ArticleList() {
   const { articles, isFetching } = useGetAllArticles();
   const { isAuthenticated } = useAuthContext();
-  // console.log(articles);
 
   return (
     <>
@@ -24,7 +23,7 @@ export default function ArticleList() {
         </div>
       ) : (
         articles.map((article) => {
-          return <ArticleListItem key={article._id} article={article} />;
+          return <ArticleListItem key={article._id} article={article}/>;
         })
       )}
     </>

@@ -1,24 +1,34 @@
-import { MdOutlineEditNote, MdOutlineBookmarkRemove } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useGetAllComments, useRemoveComment } from "../../hooks/useComments";
+import { useRemoveArticle } from "../../hooks/useArticles";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { MdOutlineEditNote, MdOutlineBookmarkRemove } from "react-icons/md";
 import ErrorMessage from "../error-message/ErrorMessage";
 
-export default function EditRemoveButton({
-  idDeleteItem,
-  editLink,
-  deleteItem,
-}) {
+export default function ArticleEditRemoveButton({ editLink, deleteIdItem }) {
   const [show, setShow] = useState(false);
   const [error, setError] = useState();
+
+  const [comments] = useGetAllComments(deleteIdItem);
+  const deleteComment = useRemoveComment();
+  const deleteArticle = useRemoveArticle();
+
+  const navigate = useNavigate();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const onClickDelete = async () => {
     try {
-      await deleteItem(idDeleteItem);
+      if (comments.length > 0) {
+        await comments.map(async (comment) => {
+          await deleteComment(comment._id);
+        });
+      }
+      await deleteArticle(deleteIdItem);
+      navigate("/articles")
     } catch (err) {
       setError(err.message);
     }

@@ -2,10 +2,11 @@ import { useFetch } from "./useFetch";
 import articlesApi from "../api/articlesApi";
 
 export function useGetAllArticles() {
-  const { data: articles, isFetching } = useFetch(articlesApi.getAll(), []);
+  const { data: articles, setData: setArticles, isFetching } = useFetch(articlesApi.getAll(), []);
 
   return {
     articles,
+    setArticles,
     isFetching,
   };
 }
@@ -47,4 +48,10 @@ export function useEditArticle() {
     articlesApi.edit(articleId, articleData);
 
   return articleEditHandler;
+}
+
+export function useRemoveArticle() {
+  const articleRemoveHandler = (articleId) => articlesApi.remove(articleId);
+
+  return articleRemoveHandler;
 }
