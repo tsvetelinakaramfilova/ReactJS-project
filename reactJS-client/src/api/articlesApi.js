@@ -13,8 +13,10 @@ const getLastThird = async () => {
     // sortBy: "_createdOn desc",
     pageSize: "3",
   });
-  
-  const result = requester.get(`${BASE_URL}?sortBy=_createdOn%20desc&${params.toString()}`);
+
+  const result = requester.get(
+    `${BASE_URL}?sortBy=_createdOn%20desc&${params.toString()}`
+  );
 
   return result;
 };
@@ -27,9 +29,13 @@ const getOne = async (articleId) => {
 
 const create = (articleData) => requester.post(`${BASE_URL}`, articleData);
 
+const edit = (articleId, articleData) =>
+  requester.put(`${BASE_URL}/${articleId}`, articleData);
+
 export default {
   getAll,
   getLastThird,
   getOne,
   create,
+  edit,
 };

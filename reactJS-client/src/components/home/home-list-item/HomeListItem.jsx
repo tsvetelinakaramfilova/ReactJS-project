@@ -23,7 +23,7 @@ export default function HomeListItem({ article }) {
           <p className="card-text text-end mb-1">
             {new Date(article._createdOn).toLocaleDateString()}
           </p>
-          <p className="card-text">{article.description}</p>
+          <p className="card-text text-truncate">{article.description}</p>
           <Link
             to={`/articles/details/${article._id}`}
             className="btn btn-dark my-auto"

@@ -44,13 +44,12 @@ export default function ArticleListItem({ article }) {
                   {article.description}
                 </p>
               </Link>
-              {/* Only author see these: */}
               <div
                 className={`${styles["itemSvg"]} d-flex flex-row-reverse bd-highlight mb-3`}
               >
                 {userId === article._ownerId && (
                   <EditRemoveButton
-                    editLink={"/articleForm"}
+                    editLink={`/articles/edit/${article._id}`}
                     deleteItem={"/articles"}
                   />
                 )}

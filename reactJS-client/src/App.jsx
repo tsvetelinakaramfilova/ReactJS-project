@@ -10,6 +10,7 @@ import LogOut from "./components/logout/Logout";
 import ArticleList from "./components/article-list/ArticleList";
 import ArticleDetails from "./components/article-details/ArticleDetails";
 import ArticleCreate from "./components/article-create/ArticleCreate";
+import ArticleEdit from "./components/article-edit/ArticleEdit";
 import NotFound from "./components/not-found/NotFound";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           />
 
           <Route path="/articles/create" element={<ArticleCreate />} />
+          <Route path="/articles/edit/:articleId" element={<ArticleEdit />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

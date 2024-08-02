@@ -1,15 +1,17 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from "react-icons/io";
 import { MdBackspace } from "react-icons/md";
 import { useForm } from "../../hooks/useForm";
-import { useCreateArticle } from "../../hooks/useArticles";
+import { useEditArticle, useGetOneArticle } from "../../hooks/useArticles";
 import ErrorMessage from "../error-message/ErrorMessage";
 
-export default function ArticleCreate() {
+export default function ArticleEdit() {
   const navigate = useNavigate();
-  const createArticle = useCreateArticle();
+  const { articleId } = useParams();
+  const { article} = useGetOneArticle(articleId);
+  const editArticle = useEditArticle();
   const [error, setError] = useState();
 
   const initialValues = {
@@ -20,10 +22,14 @@ export default function ArticleCreate() {
     images: [""],
   };
 
-  const createArticleSubmitHandler = async (values) => {
-    try {
-      const { _id: articleId } = await createArticle(values);
+  const initialFormValues = useMemo(
+    () => (article ? { ...initialValues, ...article } : initialValues),
+    [article]
+  );
 
+  const editArticleSubmitHandler = async (values) => {
+    try {
+      await editArticle(articleId, values);
       navigate(`/articles/details/${articleId}`);
     } catch (err) {
       setError(err.message);
@@ -32,12 +38,19 @@ export default function ArticleCreate() {
 
   const {
     values,
+    setValues,
     changeHandler,
     arrayChangeHandler,
     addArrayItem,
     removeArrayItem,
     submitHandler,
-  } = useForm(initialValues, createArticleSubmitHandler);
+  } = useForm(initialFormValues, editArticleSubmitHandler);
+
+  useEffect(() => {
+    if (article) {
+      setValues({ ...initialValues, ...article });
+    }
+  }, [article]);
 
   const clearError = () => {
     setError(null);
@@ -160,7 +173,7 @@ export default function ArticleCreate() {
                     type="submit"
                     variant="dark"
                   >
-                    Add article
+                    Update article
                   </Button>
                 </div>
               </Form>

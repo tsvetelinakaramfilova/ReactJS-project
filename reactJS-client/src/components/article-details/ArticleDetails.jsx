@@ -28,7 +28,7 @@ export default function ArticleDetails() {
         {/* Only author see these: */}
         {isOwner && (
           <EditRemoveButton
-            editLink={"/articleForm"}
+            editLink={`/articles/edit/${articleId}`}
             deleteItem={"/articles"}
           />
         )}

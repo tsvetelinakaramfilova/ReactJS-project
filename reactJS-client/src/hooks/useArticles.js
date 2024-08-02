@@ -11,7 +11,10 @@ export function useGetAllArticles() {
 }
 
 export function useGetLastThirdArticles() {
-  const { data: articles, isFetching } = useFetch(articlesApi.getLastThird(), []);
+  const { data: articles, isFetching } = useFetch(
+    articlesApi.getLastThird(),
+    []
+  );
 
   return {
     articles,
@@ -37,4 +40,11 @@ export function useCreateArticle() {
   const articleCreateHandler = (articleData) => articlesApi.create(articleData);
 
   return articleCreateHandler;
+}
+
+export function useEditArticle() {
+  const articleEditHandler = (articleId, articleData) =>
+    articlesApi.edit(articleId, articleData);
+
+  return articleEditHandler;
 }
