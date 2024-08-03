@@ -15,17 +15,19 @@ export function AuthContextProvider(props) {
 
   const changeAuthState = (state) => {
     setAuthState(state);
+    localStorage.setItem('accessToken', state.accessToken);
   };
 
   const logout = () => {
-    setAuthState(null);
+    setAuthState({});
+    localStorage.removeItem('accessToken');
   };
 
   const contextData = {
-    userId: authState?._id,
-    email: authState?.email,
-    accessToken: authState?.accessToken,
-    isAuthenticated: !!authState?.email,
+    userId: authState._id,
+    email: authState.email,
+    accessToken: authState.accessToken,
+    isAuthenticated: !!authState.email,
     changeAuthState,
     logout,
   };
