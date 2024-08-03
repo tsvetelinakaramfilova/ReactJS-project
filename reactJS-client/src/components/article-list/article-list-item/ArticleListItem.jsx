@@ -3,7 +3,10 @@ import styles from "./ArticleListItem.module.css";
 import ArticleTag from "../../article-tag/ArticleTag";
 
 export default function ArticleListItem({ article }) {
-  const imageSrc = article.images[0];
+  const imageSrc =
+    article.images && article.images.length > 0
+      ? article.images[0]
+      : "https://i.ibb.co/kMj0gfX/horizontel-logo.jpg";
 
   return (
     <>

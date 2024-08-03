@@ -10,12 +10,12 @@ const getAll = async () => {
 
 const getLastThird = async () => {
   const params = new URLSearchParams({
-    // sortBy: "_createdOn desc",
+    sortBy: "_createdOn desc",
     pageSize: "3",
   });
 
   const result = requester.get(
-    `${BASE_URL}?sortBy=_createdOn%20desc&${params.toString()}`
+    `${BASE_URL}?${params.toString()}`
   );
 
   return result;
