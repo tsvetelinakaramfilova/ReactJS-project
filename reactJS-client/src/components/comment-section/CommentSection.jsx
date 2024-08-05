@@ -1,6 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { useForm } from "../../hooks/useForm";
+import {
+  Formik,
+  Form as FormikForm,
+  Field,
+  ErrorMessage as FormikError,
+} from "formik";
+import * as Yup from "yup";
 import {
   useCreateComment,
   useGetAllComments,
@@ -15,7 +21,7 @@ import ErrorMessage from "../error-message/ErrorMessage";
 export default function CommentSection() {
   const { articleId } = useParams();
   const { userId, email, isAuthenticated } = useAuthContext();
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
   const [comments, setComments] = useGetAllComments(articleId);
   const createComment = useCreateComment();
   const deleteComment = useRemoveComment();
@@ -24,13 +30,20 @@ export default function CommentSection() {
     commentText: "",
   };
 
-  const commentSubmitHandler = async ({ commentText }) => {
+  const validationSchema = Yup.object().shape({
+    commentText: Yup.string()
+      .required("Comment text is required")
+      .min(4, "Comment must be at least 4 characters long"),
+  });
+
+  const commentSubmitHandler = async (values, { resetForm }) => {
     try {
-      const newComment = await createComment(articleId, commentText);
+      const newComment = await createComment(articleId, values.commentText);
       setComments((oldComments) => [
         ...oldComments,
         { ...newComment, author: { email } },
       ]);
+      resetForm();
     } catch (err) {
       setError(err.message);
     }
@@ -47,13 +60,8 @@ export default function CommentSection() {
     }
   };
 
-  const { changeHandler, submitHandler, values } = useForm(
-    initialValues,
-    commentSubmitHandler
-  );
-
   const clearError = () => {
-    setError(null);
+    setError("");
   };
 
   return (
@@ -99,25 +107,37 @@ export default function CommentSection() {
       {isAuthenticated && (
         <div className="my-4">
           <div className="card my-3 py-4 px-4">
-            <Form onSubmit={submitHandler}>
-              <Form.Group className="mb-3">
-                <Form.Control
-                  as="textarea"
-                  className="form-control"
-                  value={values.commentText}
-                  name="commentText"
-                  id="commentText"
-                  placeholder="Comment"
-                  onChange={changeHandler}
-                  required
-                />
-              </Form.Group>
-              <Form.Group className="text-center my-4">
-                <Button type="submit" className="btn btn-dark px-5">
-                  Add comment
-                </Button>
-              </Form.Group>
-            </Form>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={commentSubmitHandler}
+            >
+              {({ values, handleChange }) => (
+                <FormikForm>
+                  <Form.Group className="mb-3">
+                    <Field
+                      as="textarea"
+                      className="form-control"
+                      name="commentText"
+                      id="commentText"
+                      placeholder="Comment"
+                      value={values.commentText}
+                      onChange={handleChange}
+                    />
+                    <FormikError
+                      component="div"
+                      name="commentText"
+                      className="text-danger"
+                    />
+                  </Form.Group>
+                  <Form.Group className="text-center my-4">
+                    <Button type="submit" className="btn btn-dark px-5">
+                      Add comment
+                    </Button>
+                  </Form.Group>
+                </FormikForm>
+              )}
+            </Formik>
           </div>
           {error && <ErrorMessage message={error} clearError={clearError} />}
         </div>

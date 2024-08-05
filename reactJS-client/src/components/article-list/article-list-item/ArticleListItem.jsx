@@ -3,10 +3,7 @@ import styles from "./ArticleListItem.module.css";
 import ArticleTag from "../../article-tag/ArticleTag";
 
 export default function ArticleListItem({ article }) {
-  const imageSrc =
-    article.images && article.images.length > 0
-      ? article.images[0]
-      : "https://i.ibb.co/kMj0gfX/horizontel-logo.jpg";
+  const imageSrc = article.images[0];
 
   return (
     <>
@@ -18,8 +15,7 @@ export default function ArticleListItem({ article }) {
               alt="imageSrc"
               onError={({ currentTarget }) => {
                 currentTarget.onerror = null;
-                currentTarget.src =
-                  "https://i.ibb.co/kMj0gfX/horizontel-logo.jpg";
+                currentTarget.src = "https://i.ibb.co/kMj0gfX/horizontel-logo.jpg";
               }}
               className="img-fluid rounded ms-lg-3 py-3"
             />

@@ -7,7 +7,7 @@ export default function ArticleTag({ tags }) {
   
   return tags.map((tag) => {
     return (
-      <Badge key={tag} pill bg="success" className="mx-1">
+      <Badge key={tag} pill bg="success" className="mx-1 py-2 px-3">
         {tag}
       </Badge>
     );

@@ -14,19 +14,17 @@ export default function ArticleDetails() {
   const { isAuthenticated, userId } = useAuthContext();
   const { article, isFetching } = useGetOneArticle(articleId);
 
-  const imgArt = article?.images?.filter((img) => img.trim() !== "") || [];
+  const imgArt = article.images?.filter((img) => img.trim() !== "") || [];
   const isOwner = userId === article._ownerId;
 
   return isFetching ? (
     <Loader />
   ) : (
     <div className="container">
-      {/* <StarRating /> */}
       <div className="mb-4 mt-2 d-flex justify-content-between">
         <Link to={"/articles"} className="text-dark btn-outline-secondary">
           <TiArrowBack />
         </Link>
-        {/* Only author see these: */}
         {isOwner && (
           <ArticleEditRemoveButton
             editLink={`/articles/edit/${articleId}`}
@@ -49,7 +47,16 @@ export default function ArticleDetails() {
             {imgArt.length > 0 ? (
               imgArt.map((image, index) => (
                 <Carousel.Item key={index}>
-                  <img className="w-100 rounded" src={image} alt={image} />
+                  <img
+                    className="w-100 rounded"
+                    src={image}
+                    onError={({ currentTarget }) => {
+                      currentTarget.onerror = null;
+                      currentTarget.src =
+                        "https://i.ibb.co/kMj0gfX/horizontel-logo.jpg";
+                    }}
+                    alt={image}
+                  />
                 </Carousel.Item>
               ))
             ) : (

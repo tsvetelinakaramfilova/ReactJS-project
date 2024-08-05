@@ -1,31 +1,56 @@
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect, useMemo } from "react";
+import {
+  Formik,
+  Form as FormikForm,
+  FieldArray,
+  ErrorMessage as FormikError,
+} from "formik";
+import * as Yup from "yup";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from "react-icons/io";
 import { MdBackspace } from "react-icons/md";
-import { useForm } from "../../hooks/useForm";
 import { useEditArticle, useGetOneArticle } from "../../hooks/useArticles";
 import ErrorMessage from "../error-message/ErrorMessage";
 
 export default function ArticleEdit() {
   const navigate = useNavigate();
   const { articleId } = useParams();
-  const { article} = useGetOneArticle(articleId);
+  const { article } = useGetOneArticle(articleId);
   const editArticle = useEditArticle();
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
 
   const initialValues = {
-    name: "",
-    tags: [""],
-    timeRead: "",
-    description: "",
-    images: [""],
+    name: article?.name || "",
+    tags: article?.tags || [""],
+    timeRead: article?.timeRead || "",
+    description: article?.description || "",
+    images: article?.images || [""],
   };
 
-  const initialFormValues = useMemo(
-    () => (article ? { ...initialValues, ...article } : initialValues),
-    [article]
-  );
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Title is required"),
+    tags: Yup.array()
+      .of(Yup.string().required("Tag is required"))
+      .test(
+        "minTags",
+        "At least one tag is required",
+        (value) => value && value.length > 0
+      ),
+    timeRead: Yup.number()
+      .required("Time read is required")
+      .min(1, "Time read must be at least 1 minute"),
+    description: Yup.string()
+      .required("Description is required")
+      .min(6, "Description must be at least 6 characters long"),
+    images: Yup.array()
+      .of(Yup.string().required("Image URL is required"))
+      .test(
+        "minImages",
+        "At least one image is required",
+        (value) => value && value.length > 0
+      ),
+  });
 
   const editArticleSubmitHandler = async (values) => {
     try {
@@ -36,24 +61,8 @@ export default function ArticleEdit() {
     }
   };
 
-  const {
-    values,
-    setValues,
-    changeHandler,
-    arrayChangeHandler,
-    addArrayItem,
-    removeArrayItem,
-    submitHandler,
-  } = useForm(initialFormValues, editArticleSubmitHandler);
-
-  useEffect(() => {
-    if (article) {
-      setValues({ ...initialValues, ...article });
-    }
-  }, [article]);
-
   const clearError = () => {
-    setError(null);
+    setError("");
   };
 
   return (
@@ -68,115 +77,163 @@ export default function ArticleEdit() {
                   onClick={() => navigate(-1)}
                 />
               </div>
-              <Form onSubmit={submitHandler}>
-                <div className="form-group my-3">
-                  <label htmlFor="name">Title</label>
-                  <Form.Control
-                    name="name"
-                    type="text"
-                    className="form-control custom-form-control"
-                    value={values.name}
-                    onChange={changeHandler}
-                  />
-                </div>
-
-                <div className="form-group my-3">
-                  <div className="d-flex justify-content-between">
-                    <label htmlFor="tags">Tags</label>
-                    <Button
-                      className="b-add text-white btn btn-success me-1"
-                      onClick={() => addArrayItem("tags")}
-                    >
-                      <IoMdAddCircleOutline />
-                    </Button>
-                  </div>
-                  {values.tags.map((tag, index) => (
-                    <div key={index} className="form-group my-2">
-                      <InputGroup className="mb-3">
-                        <Form.Control
-                          type="text"
-                          value={tag}
-                          onChange={(e) =>
-                            arrayChangeHandler(index, "tags", e.target.value)
-                          }
-                          className="form-control"
-                        />
-                        <Button
-                          className="btn-danger"
-                          onClick={() => removeArrayItem(index, "tags")}
-                        >
-                          <IoMdRemoveCircleOutline className="me-1" />
-                        </Button>
-                      </InputGroup>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={editArticleSubmitHandler}
+                enableReinitialize
+              >
+                {({ values, handleChange, handleSubmit }) => (
+                  <FormikForm onSubmit={handleSubmit}>
+                    <div className="form-group my-3">
+                      <label htmlFor="name">Title</label>
+                      <Form.Control
+                        name="name"
+                        type="text"
+                        className="form-control custom-form-control"
+                        value={values.name}
+                        onChange={handleChange}
+                      />
+                      <FormikError
+                        name="name"
+                        component="div"
+                        className="text-danger"
+                      />
                     </div>
-                  ))}
-                </div>
 
-                <div className="form-group my-3">
-                  <label htmlFor="timeRead">Time read</label>
-                  <Form.Control
-                    name="timeRead"
-                    type="number"
-                    className="form-control custom-form-control"
-                    value={values.timeRead}
-                    onChange={changeHandler}
-                  />
-                </div>
-
-                <div className="form-group my-3">
-                  <label htmlFor="description">Description</label>
-                  <Form.Control
-                    name="description"
-                    as="textarea"
-                    rows={3}
-                    className="form-control custom-form-control"
-                    value={values.description}
-                    onChange={changeHandler}
-                  />
-                </div>
-
-                <div className="form-group my-3">
-                  <div className="d-flex justify-content-between">
-                    <label htmlFor="images">Images</label>
-                    <Button
-                      className="b-add text-white btn btn-success me-1"
-                      onClick={() => addArrayItem("images")}
-                    >
-                      <IoMdAddCircleOutline />
-                    </Button>
-                  </div>
-                  {values.images.map((image, index) => (
-                    <div key={index} className="form-group my-2">
-                      <InputGroup className="mb-3">
-                        <Form.Control
-                          type="text"
-                          value={image}
-                          onChange={(e) =>
-                            arrayChangeHandler(index, "images", e.target.value)
-                          }
-                          className="form-control"
-                        />
-                        <Button
-                          className="btn-danger"
-                          onClick={() => removeArrayItem(index, "images")}
-                        >
-                          <IoMdRemoveCircleOutline className="me-1" />
-                        </Button>
-                      </InputGroup>
+                    <div className="form-group my-3">
+                      <FieldArray name="tags">
+                        {({ push, remove }) => (
+                          <>
+                            <div className="d-flex justify-content-between">
+                              <label htmlFor="tags">Tags</label>
+                              <Button
+                                type="button"
+                                className="b-add text-white btn btn-success me-1"
+                                onClick={() => push("")}
+                              >
+                                <IoMdAddCircleOutline />
+                              </Button>
+                            </div>
+                            {values.tags.map((tag, index) => (
+                              <div key={index} className="form-group my-2">
+                                <InputGroup className="mb-3">
+                                  <Form.Control
+                                    type="text"
+                                    name={`tags[${index}]`}
+                                    value={tag}
+                                    onChange={handleChange}
+                                    className="form-control"
+                                  />
+                                  <Button
+                                    type="button"
+                                    className="btn-danger"
+                                    onClick={() => remove(index)}
+                                  >
+                                    <IoMdRemoveCircleOutline className="me-1" />
+                                  </Button>
+                                </InputGroup>
+                              </div>
+                            ))}
+                          </>
+                        )}
+                      </FieldArray>
+                      <FormikError
+                        name="tags"
+                        component="div"
+                        className="text-danger"
+                      />
                     </div>
-                  ))}
-                </div>
 
-                <div className="d-grid gap-2 justify-content-center">
-                  <Button
-                    className="mt-3 text-white"
-                    type="submit"
-                    variant="dark"
-                  >
-                    Update article
-                  </Button>
-                </div>
-              </Form>
+                    <div className="form-group my-3">
+                      <label htmlFor="timeRead">Time read</label>
+                      <Form.Control
+                        name="timeRead"
+                        type="number"
+                        className="form-control custom-form-control"
+                        value={values.timeRead}
+                        onChange={handleChange}
+                      />
+                      <FormikError
+                        name="timeRead"
+                        component="div"
+                        className="text-danger"
+                      />
+                    </div>
+
+                    <div className="form-group my-3">
+                      <label htmlFor="description">Description</label>
+                      <Form.Control
+                        name="description"
+                        as="textarea"
+                        rows={3}
+                        className="form-control custom-form-control"
+                        value={values.description}
+                        onChange={handleChange}
+                      />
+                      <FormikError
+                        name="description"
+                        component="div"
+                        className="text-danger"
+                      />
+                    </div>
+
+                    <div className="form-group my-3">
+                      <FieldArray name="images">
+                        {({ push, remove }) => (
+                          <>
+                            <div className="d-flex justify-content-between">
+                              <label htmlFor="images">Images</label>
+                              <Button
+                                type="button"
+                                className="b-add text-white btn btn-success me-1"
+                                onClick={() => push("")}
+                              >
+                                <IoMdAddCircleOutline />
+                              </Button>
+                            </div>
+                            {values.images.map((image, index) => (
+                              <div key={index} className="form-group my-2">
+                                <InputGroup className="mb-3">
+                                  <Form.Control
+                                    type="text"
+                                    name={`images[${index}]`}
+                                    value={image}
+                                    onChange={handleChange}
+                                    className="form-control"
+                                  />
+                                  <Button
+                                    type="button"
+                                    className="btn-danger"
+                                    onClick={() => remove(index)}
+                                  >
+                                    <IoMdRemoveCircleOutline className="me-1" />
+                                  </Button>
+                                </InputGroup>
+                              </div>
+                            ))}
+                          </>
+                        )}
+                      </FieldArray>
+                      <FormikError
+                        name="images"
+                        component="div"
+                        className="text-danger"
+                      />
+                    </div>
+
+                    <div className="d-grid gap-2 justify-content-center">
+                      <Button
+                        className="mt-3 text-white"
+                        type="submit"
+                        variant="dark"
+                      >
+                        Edit article
+                      </Button>
+                    </div>
+                  </FormikForm>
+                )}
+              </Formik>
               {error && (
                 <ErrorMessage message={error} clearError={clearError} />
               )}
