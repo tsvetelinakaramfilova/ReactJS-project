@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import styles from "./NotFound.module.css";
+import { useTranslation } from "react-i18next";
 
 export default function NotFound() {
+  const { t } = useTranslation();
+
   return (
     <section className="pb-5">
       <div
@@ -16,7 +19,7 @@ export default function NotFound() {
             className="text-white text-decoration-none px-4 py-3 
                     bg-dark d-inline-block mt-2 rounded"
           >
-            Go to Home
+            {t("notFound.goToHome")}
           </Link>
         </div>
       </div>

@@ -10,10 +10,12 @@ import * as Yup from "yup";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from "react-icons/io";
 import { MdBackspace } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 import { useCreateArticle } from "../../hooks/useArticles";
 import ErrorMessage from "../error-message/ErrorMessage";
 
 export default function ArticleCreate() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const createArticle = useCreateArticle();
   const [error, setError] = useState("");
@@ -27,25 +29,25 @@ export default function ArticleCreate() {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Title is required"),
+    name: Yup.string().required(t("articleForm.requiredTitle")),
     tags: Yup.array()
-      .of(Yup.string().required("Tag is required"))
+      .of(Yup.string().required(t("articleForm.requiredTag")))
       .test(
         "minTags",
-        "At least one tag is required",
+        t("articleForm.requiredOneTag"),
         (value) => value && value.length > 0
       ),
     timeRead: Yup.number()
-      .required("Time read is required")
-      .min(1, "Time read must be a positive number"),
+      .required(t("articleForm.requiredTime"))
+      .min(1, t("articleForm.positiveNumberTime")),
     description: Yup.string()
-      .required("Description is required")
-      .min(6, "Description must be at least 6 characters long"),
+      .required(t("articleForm.requiredDescription"))
+      .min(6, t("articleForm.minLengthDescription")),
     images: Yup.array()
-      .of(Yup.string().required("Image URL is required"))
+      .of(Yup.string().required(t("articleForm.requiredImage")))
       .test(
         "minImages",
-        "At least one image is required",
+        t("articleForm.requiredOneImage"),
         (value) => value && value.length > 0
       ),
   });
@@ -84,7 +86,7 @@ export default function ArticleCreate() {
                 {({ values, handleChange, handleSubmit, isSubmitting }) => (
                   <FormikForm onSubmit={handleSubmit}>
                     <div className="form-group my-3">
-                      <label htmlFor="name">Title</label>
+                      <label htmlFor="name">{t("articleForm.title")}</label>
                       <Form.Control
                         name="name"
                         type="text"
@@ -104,7 +106,9 @@ export default function ArticleCreate() {
                         {({ push, remove }) => (
                           <>
                             <div className="d-flex justify-content-between">
-                              <label htmlFor="tags">Tags</label>
+                              <label htmlFor="tags">
+                                {t("articleForm.tags")}
+                              </label>
                               <Button
                                 type="button"
                                 className="b-add text-white btn btn-success me-1"
@@ -144,7 +148,9 @@ export default function ArticleCreate() {
                     </div>
 
                     <div className="form-group my-3">
-                      <label htmlFor="timeRead">Time read</label>
+                      <label htmlFor="timeRead">
+                        {t("articleForm.timeRead")}
+                      </label>
                       <Form.Control
                         name="timeRead"
                         type="number"
@@ -160,7 +166,9 @@ export default function ArticleCreate() {
                     </div>
 
                     <div className="form-group my-3">
-                      <label htmlFor="description">Description</label>
+                      <label htmlFor="description">
+                        {t("articleForm.description")}
+                      </label>
                       <Form.Control
                         name="description"
                         as="textarea"
@@ -181,7 +189,9 @@ export default function ArticleCreate() {
                         {({ push, remove }) => (
                           <>
                             <div className="d-flex justify-content-between">
-                              <label htmlFor="images">Images</label>
+                              <label htmlFor="images">
+                                {t("articleForm.images")}
+                              </label>
                               <Button
                                 type="button"
                                 className="b-add text-white btn btn-success me-1"
@@ -227,7 +237,7 @@ export default function ArticleCreate() {
                         variant="dark"
                         disabled={isSubmitting}
                       >
-                        Add article
+                        {t("articleForm.addArticle")}
                       </Button>
                     </div>
                   </FormikForm>

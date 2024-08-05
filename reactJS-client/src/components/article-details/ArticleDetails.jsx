@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useGetOneArticle } from "../../hooks/useArticles";
 import { useAuthContext } from "../../contexts/authContext";
 import { Carousel } from "react-bootstrap";
@@ -10,6 +11,7 @@ import Loader from "../loader/Loader";
 import horizontelLogo from "../../assets/horizontel_logo.jpg";
 
 export default function ArticleDetails() {
+  const { t } = useTranslation();
   const { articleId } = useParams();
   const { isAuthenticated, userId } = useAuthContext();
   const { article, isFetching } = useGetOneArticle(articleId);
@@ -72,8 +74,8 @@ export default function ArticleDetails() {
           <div className="rounded-pill ms-auto text-end mt-3 mb-1">
             <div className="text-end text-muted">
               <p>
-                From {new Date(article._createdOn).toLocaleDateString()}, Read{" "}
-                {article.timeRead} min.
+                {t("article.from")} {new Date(article._createdOn).toLocaleDateString()}, {t("article.read")}{" "}
+                {article.timeRead} {t("article.min")}
               </p>
             </div>
           </div>

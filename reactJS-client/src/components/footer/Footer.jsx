@@ -1,40 +1,42 @@
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../contexts/authContext";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
+  const { t } = useTranslation();
   const { isAuthenticated } = useAuthContext();
 
   const informationLink = [
     {
       to: "/",
-      title: "About Us",
+      title: t("home"),
     },
     {
       to: "/articles",
-      title: "Articles",
+      title: t("articles"),
     },
   ];
 
   const navGuest = [
     {
       to: "/login",
-      title: "Log In",
+      title: t("login"),
     },
     {
       to: "/registration",
-      title: "Registration",
+      title: t("registration"),
     },
   ];
 
   const navUser = [
     {
       to: "/articles/create",
-      title: "Add Article",
+      title:  t("addArticle"),
     },
     {
       to: "/logout",
-      title: "Log Out",
+      title: t("logout"),
     },
   ];
 

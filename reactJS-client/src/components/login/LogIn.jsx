@@ -9,21 +9,23 @@ import {
 } from "formik";
 import * as Yup from "yup";
 import brandLogo from "../../assets/Logo_f.png";
+import { useTranslation } from "react-i18next";
 import { useLogin } from "../../hooks/useAuth";
 import ErrorMessage from "../error-message/ErrorMessage";
 
 export default function LogIn() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const login = useLogin();
   const [error, setError] = useState("");
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
+      .email(t("userForm.invalidEmail"))
+      .required(t("userForm.requiredEmail")),
     password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
+      .min(6, t("userForm.minLengthPassword"))
+      .required(t("userForm.requiredPassword")),
   });
 
   const handleSubmit = async (values) => {
@@ -63,7 +65,7 @@ export default function LogIn() {
                   <FormikForm>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="email" className="form-label">
-                        Email
+                        {t("userForm.email")}
                       </Form.Label>
                       <Field
                         type="email"
@@ -82,7 +84,7 @@ export default function LogIn() {
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="password" className="form-label">
-                        Password
+                        {t("userForm.password")}
                       </Form.Label>
                       <Field
                         type="password"
@@ -105,7 +107,7 @@ export default function LogIn() {
                         className="btn btn-dark px-5"
                         disabled={isSubmitting}
                       >
-                        Log In
+                        {t("login")}
                       </Button>
                     </Form.Group>
                   </FormikForm>
@@ -113,12 +115,12 @@ export default function LogIn() {
               </Formik>
               <div className="col-12">
                 <p className="m-0 text-secondary text-center">
-                  Go to{" "}
+                  {t("userForm.goTo")}{" "}
                   <Link
                     to="/registration"
                     className="link-dark text-decoration-none"
                   >
-                    Registration
+                    {t("registration")}
                   </Link>
                 </p>
               </div>

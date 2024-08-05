@@ -1,41 +1,44 @@
 import { Link } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import brandLogo from "../../assets/Logo_f.png";
 import { useAuthContext } from "../../contexts/authContext";
+import LanguageSwitch from "./language-switch/LanguageSwitch";
 
 export default function Header() {
+  const { t } = useTranslation();
   const { isAuthenticated } = useAuthContext();
 
   const navigation = [
     {
       to: "/",
-      title: "Home",
+      title: t("home"),
     },
     {
       to: "/articles",
-      title: "Articles",
+      title: t("articles"),
     },
   ];
 
   const navGuest = [
     {
       to: "/login",
-      title: "Log In",
+      title: t("login"),
     },
     {
       to: "/registration",
-      title: "Registration",
+      title: t("registration"),
     },
   ];
 
   const navUser = [
     {
       to: "/articles/create",
-      title: "Add Article",
+      title: t("addArticle"),
     },
     {
       to: "/logout",
-      title: "Log Out",
+      title: t("logout"),
     },
   ];
 
@@ -49,7 +52,6 @@ export default function Header() {
 
   return (
     <>
-      {/* data-bs-theme="dark" - dark mode */}
       <Navbar
         bg="light"
         data-bs-theme="light"
@@ -68,11 +70,14 @@ export default function Header() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar-toggler collapsed" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
+            <Nav className="me-auto">
               {navigation.map((item) => getNav(item))}
               {isAuthenticated
                 ? navUser.map((item) => getNav(item))
                 : navGuest.map((item) => getNav(item))}
+            </Nav>
+            <Nav className="ml-2 ms-auto">
+              <LanguageSwitch />
             </Nav>
           </Navbar.Collapse>
         </Container>

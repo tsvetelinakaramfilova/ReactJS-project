@@ -11,22 +11,24 @@ import * as Yup from "yup";
 import brandLogo from "../../assets/Logo_f.png";
 import { useRegister } from "../../hooks/useAuth";
 import ErrorMessage from "../error-message/ErrorMessage";
+import { useTranslation } from "react-i18next";
 
 export default function Registration() {
   const register = useRegister();
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const { t } = useTranslation();
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .email("Invalid email address")
-      .required("Email is required"),
+      .email(t("userForm.invalidEmail"))
+      .required(t("userForm.requiredEmail")),
     password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
+      .min(6, t("userForm.minLengthPassword"))
+      .required(t("userForm.requiredPassword")),
     rePassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Repeat Password is required"),
+      .oneOf([Yup.ref("password"), null], t("userForm.mustMatchPassword"))
+      .required(t("userForm.requiredRePassword")),
   });
 
   const handleSubmit = async (values) => {
@@ -66,7 +68,7 @@ export default function Registration() {
                   <FormikForm>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="email" className="form-label">
-                        Email
+                        {t("userForm.email")}
                       </Form.Label>
                       <Field
                         type="email"
@@ -85,7 +87,7 @@ export default function Registration() {
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="password" className="form-label">
-                        Password
+                        {t("userForm.password")}
                       </Form.Label>
                       <Field
                         type="password"
@@ -104,7 +106,7 @@ export default function Registration() {
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="rePassword" className="form-label">
-                        Repeat Password
+                        {t("userForm.rePassword")}
                       </Form.Label>
                       <Field
                         type="password"
@@ -123,7 +125,7 @@ export default function Registration() {
                     </Form.Group>
                     <Form.Group className="text-center my-4">
                       <Button type="submit" className="btn btn-dark px-5">
-                        Registration
+                        {t("registration")}
                       </Button>
                     </Form.Group>
                   </FormikForm>
@@ -131,9 +133,9 @@ export default function Registration() {
               </Formik>
               <div className="col-12">
                 <p className="m-0 text-secondary text-center">
-                  Have an account?{" "}
+                  {t("userForm.haveAnAccount")}{" "}
                   <Link to="/login" className="link-dark text-decoration-none">
-                    Log In
+                    {t("login")}
                   </Link>
                 </p>
               </div>

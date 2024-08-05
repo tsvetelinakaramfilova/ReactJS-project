@@ -7,6 +7,7 @@ import {
   ErrorMessage as FormikError,
 } from "formik";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 import {
   useCreateComment,
   useGetAllComments,
@@ -19,6 +20,7 @@ import CommentRemoveButton from "../comment-remove-button/CommentRemoveButton";
 import ErrorMessage from "../error-message/ErrorMessage";
 
 export default function CommentSection() {
+  const { t } = useTranslation();
   const { articleId } = useParams();
   const { userId, email, isAuthenticated } = useAuthContext();
   const [error, setError] = useState("");
@@ -68,15 +70,13 @@ export default function CommentSection() {
     <div className="my-4">
       <div>
         <h4 style={{ fontFamily: "Lora" }} className="ms-1">
-          Comment
+          {t("comments.comments")}
         </h4>
       </div>
       {comments.length === 0 ? (
         <div className="card my-3 py-2 px-3">
           <div className="d-flex justify-content-center">
-            <h6 className="ms-1 my-2">
-              There are no article comments available!
-            </h6>
+            <h6 className="ms-1 my-2">{t("comments.notComment")}</h6>
           </div>
         </div>
       ) : (
@@ -132,7 +132,7 @@ export default function CommentSection() {
                   </Form.Group>
                   <Form.Group className="text-center my-4">
                     <Button type="submit" className="btn btn-dark px-5">
-                      Add comment
+                      {t("comments.addComment")}
                     </Button>
                   </Form.Group>
                 </FormikForm>

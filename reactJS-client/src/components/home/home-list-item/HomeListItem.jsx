@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { Link } from "react-router-dom";
 
 export default function HomeListItem({ article }) {
@@ -25,7 +26,7 @@ export default function HomeListItem({ article }) {
             to={`/articles/details/${article._id}`}
             className="btn btn-dark my-auto"
           >
-            Read
+            {t("articlesInfo.read")}
           </Link>
         </div>
       </div>
