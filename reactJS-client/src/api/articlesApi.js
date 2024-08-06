@@ -21,6 +21,15 @@ const getLastThird = async () => {
   return result;
 };
 
+const getMy = async (userId) => {
+   const params = new URLSearchParams({
+    where: `_ownerId="${userId}"`,
+  });
+  const result = requester.get(`${BASE_URL}?${params.toString()}`);
+
+  return result;
+};
+
 const getOne = async (articleId) => {
   const result = await requester.get(`${BASE_URL}/${articleId}`);
 
@@ -37,6 +46,7 @@ const remove = (articleId) => requester.remove(`${BASE_URL}/${articleId}`);
 export default {
   getAll,
   getLastThird,
+  getMy,
   getOne,
   create,
   edit,

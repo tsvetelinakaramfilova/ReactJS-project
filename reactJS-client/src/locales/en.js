@@ -4,6 +4,7 @@ const en = {
     articles: "Articles",
     login: "Log In",
     registration: "Registration",
+    myArticle: "My Articles",
     addArticle: "Add Article",
     logout: "Log out",
     homePage: {

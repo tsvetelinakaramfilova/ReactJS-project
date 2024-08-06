@@ -1,13 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import brandLogo from "../../assets/Logo_f.png";
 import { useAuthContext } from "../../contexts/authContext";
 import LanguageSwitch from "./language-switch/LanguageSwitch";
+import styles from "./Header.module.css";
 
 export default function Header() {
   const { t } = useTranslation();
   const { isAuthenticated } = useAuthContext();
+  const location = useLocation();
 
   const navigation = [
     {
@@ -37,14 +39,24 @@ export default function Header() {
       title: t("addArticle"),
     },
     {
+      to: "/articles/my",
+      title: t("myArticle"),
+    },
+    {
       to: "/logout",
       title: t("logout"),
     },
   ];
 
   const getNav = (item) => {
+    const isActive = location.pathname === item.to;
     return (
-      <Nav.Link as={Link} key={item.title} to={item.to}>
+      <Nav.Link
+        as={Link}
+        key={item.title}
+        to={item.to}
+        className={isActive ? styles.active : ""}
+      >
         {item.title}
       </Nav.Link>
     );

@@ -4,6 +4,7 @@ const bg = {
     articles: "Статии",
     login: "Влизане",
     registration: "Регистрация",
+    myArticle: "Моите статии",
     addArticle: "Добавяне на статия",
     logout: "Изход",
     homePage: {
