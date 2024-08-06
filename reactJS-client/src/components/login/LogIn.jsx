@@ -1,44 +1,60 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
-import {
-  Formik,
-  Field,
-  Form as FormikForm,
-  ErrorMessage as FormikError,
-} from "formik";
-import * as Yup from "yup";
 import brandLogo from "../../assets/Logo_f.png";
-import { useTranslation } from "react-i18next";
+import { useForm } from "../../hooks/useForm";
 import { useLogin } from "../../hooks/useAuth";
 import ErrorMessage from "../error-message/ErrorMessage";
+import { useTranslation } from "react-i18next";
 
 export default function LogIn() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const login = useLogin();
-  const [error, setError] = useState("");
+  const [error, setError] = useState({});
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email(t("userForm.invalidEmail"))
-      .required(t("userForm.requiredEmail")),
-    password: Yup.string()
-      .min(5, t("userForm.minLengthPassword"))
-      .required(t("userForm.requiredPassword")),
-  });
+  const initialValues = {
+    email: "",
+    password: "",
+  };
 
-  const handleSubmit = async (values) => {
+  const validationLogin = (values) => {
+    const errors = {};
+    if (!values.email) {
+      errors.email = t("userForm.requiredEmail");
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+      errors.email = t("userForm.invalidEmail");
+    }
+    if (!values.password) {
+      errors.password = t("userForm.requiredPassword");
+    } else if (values.password.length < 5) {
+      errors.password = t("userForm.minLengthPassword");
+    }
+    return errors;
+  };
+
+  const loginSubmitHandler = async ({ email, password }) => {
+    const errors = validationLogin({ email, password });
+    if (Object.keys(errors).length) {
+      setError(errors);
+      return;
+    }
+
     try {
-      await login(values.email, values.password);
+      await login(email, password);
       navigate("/");
     } catch (err) {
-      setError(err.message);
+      setError({ server: err.message });
     }
   };
 
+  const { changeHandler, submitHandler, values } = useForm(
+    initialValues,
+    loginSubmitHandler
+  );
+
   const clearError = () => {
-    setError("");
+    setError({});
   };
 
   return (
@@ -56,63 +72,49 @@ export default function LogIn() {
                 />
               </div>
 
-              <Formik
-                initialValues={{ email: "", password: "" }}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-              >
-                {({ values, handleChange, isSubmitting }) => (
-                  <FormikForm>
-                    <Form.Group className="mb-3">
-                      <Form.Label htmlFor="email" className="form-label">
-                        {t("userForm.email")}
-                      </Form.Label>
-                      <Field
-                        type="email"
-                        name="email"
-                        id="email"
-                        placeholder="name@example.com"
-                        className="form-control"
-                        value={values.email}
-                        onChange={handleChange}
-                      />
-                      <FormikError
-                        name="email"
-                        component="div"
-                        className="text-danger"
-                      />
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label htmlFor="password" className="form-label">
-                        {t("userForm.password")}
-                      </Form.Label>
-                      <Field
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="*******"
-                        className="form-control"
-                        value={values.password}
-                        onChange={handleChange}
-                      />
-                      <FormikError
-                        name="password"
-                        component="div"
-                        className="text-danger"
-                      />
-                    </Form.Group>
-                    <Form.Group className="text-center my-4">
-                      <Button
-                        type="submit"
-                        className="btn btn-dark px-5"
-                        disabled={isSubmitting}
-                      >
-                        {t("login")}
-                      </Button>
-                    </Form.Group>
-                  </FormikForm>
-                )}
-              </Formik>
+              <Form onSubmit={submitHandler}>
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="email" className="form-label">
+                    {t("userForm.email")}
+                  </Form.Label>
+                  <Form.Control
+                    type="email"
+                    className="form-control"
+                    value={values.email}
+                    name="email"
+                    id="email"
+                    placeholder="name@example.com"
+                    onChange={changeHandler}
+                    // required
+                  />
+                  {error.email && (
+                    <div className="text-danger">{error.email}</div>
+                  )}
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label htmlFor="password" className="form-label">
+                    {t("userForm.password")}
+                  </Form.Label>
+                  <Form.Control
+                    type="password"
+                    className="form-control"
+                    value={values.password}
+                    name="password"
+                    id="password"
+                    placeholder="*******"
+                    onChange={changeHandler}
+                    // required
+                  />
+                  {error.password && (
+                    <div className="text-danger">{error.password}</div>
+                  )}
+                </Form.Group>
+                <Form.Group className="text-center my-4">
+                  <Button type="submit" className="btn btn-dark px-5">
+                    {t("login")}
+                  </Button>
+                </Form.Group>
+              </Form>
               <div className="col-12">
                 <p className="m-0 text-secondary text-center">
                   {t("userForm.goTo")}{" "}
@@ -124,8 +126,8 @@ export default function LogIn() {
                   </Link>
                 </p>
               </div>
-              {error && (
-                <ErrorMessage message={error} clearError={clearError} />
+              {error.server && (
+                <ErrorMessage message={error.server} clearError={clearError} />
               )}
             </div>
           </div>

@@ -32,6 +32,7 @@ const bg = {
     },
     articleForm: {
       requiredTitle: "Заглавието е задължително",
+      minLengthTitle: "Заглавието трябва да е дълго поне 3 знака",
       requiredTag: "Етикетът е задължителен",
       requiredOneTag: "Изисква се поне един етикет",
       requiredTime: "Необходимо е време за четене",

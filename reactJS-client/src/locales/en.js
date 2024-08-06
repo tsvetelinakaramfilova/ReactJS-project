@@ -32,6 +32,7 @@ const en = {
     },
     articleForm: {
       requiredTitle: "Title is required",
+      minLengthTitle: "Title must be at least 3 characters long",
       requiredTag: "Tag is required",
       requiredOneTag: "At least one tag is required",
       requiredTime: "Time read is required",

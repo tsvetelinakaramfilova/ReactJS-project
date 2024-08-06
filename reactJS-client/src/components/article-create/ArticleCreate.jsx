@@ -29,7 +29,9 @@ export default function ArticleCreate() {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required(t("articleForm.requiredTitle")),
+    name: Yup.string()
+      .required(t("articleForm.requiredTitle"))
+      .min(3, t("articleForm.minLengthTitle")),
     tags: Yup.array()
       .of(Yup.string().required(t("articleForm.requiredTag")))
       .test(
@@ -83,7 +85,7 @@ export default function ArticleCreate() {
                 onSubmit={createArticleSubmitHandler}
                 enableReinitialize
               >
-                {({ values, handleChange, handleSubmit, isSubmitting }) => (
+                {({ values, handleChange, handleSubmit }) => (
                   <FormikForm onSubmit={handleSubmit}>
                     <div className="form-group my-3">
                       <label htmlFor="name">{t("articleForm.title")}</label>
@@ -235,7 +237,6 @@ export default function ArticleCreate() {
                         className="mt-3 text-white"
                         type="submit"
                         variant="dark"
-                        disabled={isSubmitting}
                       >
                         {t("articleForm.addArticle")}
                       </Button>

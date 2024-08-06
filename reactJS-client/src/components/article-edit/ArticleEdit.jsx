@@ -31,7 +31,9 @@ export default function ArticleEdit() {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required(t("articleForm.requiredTitle")),
+    name: Yup.string()
+      .required(t("articleForm.requiredTitle"))
+      .min(3, t("articleForm.minLengthTitle")),
     tags: Yup.array()
       .of(Yup.string().required(t("articleForm.requiredTag")))
       .test(
