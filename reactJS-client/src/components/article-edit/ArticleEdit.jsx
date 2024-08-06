@@ -13,12 +13,13 @@ import { MdBackspace } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { useEditArticle, useGetOneArticle } from "../../hooks/useArticles";
 import ErrorMessage from "../error-message/ErrorMessage";
+import Loader from "../loader/Loader";
 
 export default function ArticleEdit() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { articleId } = useParams();
-  const { article } = useGetOneArticle(articleId);
+  const { article, isFetching } = useGetOneArticle(articleId);
   const editArticle = useEditArticle();
   const [error, setError] = useState("");
 
@@ -71,7 +72,9 @@ export default function ArticleEdit() {
     setError("");
   };
 
-  return (
+  return isFetching ? (
+    <Loader />
+  ) : (
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-8">
