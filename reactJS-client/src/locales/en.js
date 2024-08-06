@@ -20,7 +20,7 @@ const en = {
     userForm: {
       invalidEmail: "Invalid email address",
       requiredEmail: "Email is required",
-      minLengthPassword: "Password must be at least 6 characters",
+      minLengthPassword: "Password must be at least 5 characters",
       requiredPassword: "Password is required",
       mustMatchPassword: "Passwords must match",
       requiredRePassword: "Repeat Password is required",

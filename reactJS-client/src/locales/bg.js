@@ -20,7 +20,7 @@ const bg = {
     userForm: {
       invalidEmail: "Невалиден имейл адрес",
       requiredEmail: "Имейлът е задължителен",
-      minLengthPassword: "Паролата трябва да е поне 6 знака",
+      minLengthPassword: "Паролата трябва да е поне 5 знака",
       requiredPassword: "Изисква се парола",
       mustMatchPassword: "Паролите трябва да съвпадат",
       requiredRePassword: "Изисква се повторение на паролата",

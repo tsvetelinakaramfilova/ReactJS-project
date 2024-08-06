@@ -24,7 +24,7 @@ export default function Registration() {
       .email(t("userForm.invalidEmail"))
       .required(t("userForm.requiredEmail")),
     password: Yup.string()
-      .min(6, t("userForm.minLengthPassword"))
+      .min(5, t("userForm.minLengthPassword"))
       .required(t("userForm.requiredPassword")),
     rePassword: Yup.string()
       .oneOf([Yup.ref("password"), null], t("userForm.mustMatchPassword"))
