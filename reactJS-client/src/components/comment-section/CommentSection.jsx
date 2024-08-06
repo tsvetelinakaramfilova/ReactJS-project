@@ -38,7 +38,7 @@ export default function CommentSection() {
       .min(4, "Comment must be at least 4 characters long"),
   });
 
-  const commentSubmitHandler = async (values, { resetForm }) => {
+  const commentSubmitHandler = async (values, { setSubmitting, resetForm }) => {
     try {
       const newComment = await createComment(articleId, values.commentText);
       setComments((oldComments) => [
@@ -48,6 +48,8 @@ export default function CommentSection() {
       resetForm();
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -112,7 +114,7 @@ export default function CommentSection() {
               validationSchema={validationSchema}
               onSubmit={commentSubmitHandler}
             >
-              {({ values, handleChange }) => (
+              {({ values, handleChange, isSubmitting }) => (
                 <FormikForm>
                   <Form.Group className="mb-3">
                     <Field
@@ -131,7 +133,11 @@ export default function CommentSection() {
                     />
                   </Form.Group>
                   <Form.Group className="text-center my-4">
-                    <Button type="submit" className="btn btn-dark px-5">
+                    <Button
+                      type="submit"
+                      className="btn btn-dark px-5"
+                      disabled={isSubmitting}
+                    >
                       {t("comments.addComment")}
                     </Button>
                   </Form.Group>

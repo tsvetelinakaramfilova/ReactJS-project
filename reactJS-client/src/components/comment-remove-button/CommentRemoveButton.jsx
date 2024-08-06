@@ -9,21 +9,26 @@ import ErrorMessage from "../error-message/ErrorMessage";
 export default function CommentRemoveButton({ idDeleteComment, deleteMethod }) {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const onClickDelete = async () => {
+    setLoading(true);
     try {
       await deleteMethod(idDeleteComment);
+      handleClose();
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const clearError = () => {
-    setError(null);
+    setError("");
   };
 
   return (
@@ -49,7 +54,11 @@ export default function CommentRemoveButton({ idDeleteComment, deleteMethod }) {
           >
             {t("deleteForm.cancel")}
           </Button>
-          <Button className="btn btn-dark" onClick={onClickDelete}>
+          <Button
+            className="btn btn-dark"
+            onClick={onClickDelete}
+            disabled={loading}
+          >
             {t("deleteForm.delete")}
           </Button>
         </Modal.Footer>

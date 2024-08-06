@@ -54,12 +54,14 @@ export default function ArticleCreate() {
       ),
   });
 
-  const createArticleSubmitHandler = async (values) => {
+  const createArticleSubmitHandler = async (values, { setSubmitting }) => {
     try {
       const { _id: articleId } = await createArticle(values);
       navigate(`/articles/details/${articleId}`);
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -85,7 +87,7 @@ export default function ArticleCreate() {
                 onSubmit={createArticleSubmitHandler}
                 enableReinitialize
               >
-                {({ values, handleChange, handleSubmit }) => (
+                {({ values, handleChange, handleSubmit, isSubmitting }) => (
                   <FormikForm onSubmit={handleSubmit}>
                     <div className="form-group my-3">
                       <label htmlFor="name">{t("articleForm.title")}</label>
@@ -237,6 +239,7 @@ export default function ArticleCreate() {
                         className="mt-3 text-white"
                         type="submit"
                         variant="dark"
+                        disabled={isSubmitting}
                       >
                         {t("articleForm.addArticle")}
                       </Button>

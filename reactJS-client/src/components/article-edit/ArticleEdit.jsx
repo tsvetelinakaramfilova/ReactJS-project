@@ -56,12 +56,14 @@ export default function ArticleEdit() {
       ),
   });
 
-  const editArticleSubmitHandler = async (values) => {
+  const editArticleSubmitHandler = async (values, { setSubmitting }) => {
     try {
       await editArticle(articleId, values);
       navigate(`/articles/details/${articleId}`);
     } catch (err) {
       setError(err.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -87,7 +89,7 @@ export default function ArticleEdit() {
                 onSubmit={editArticleSubmitHandler}
                 enableReinitialize
               >
-                {({ values, handleChange, handleSubmit }) => (
+                {({ values, handleChange, handleSubmit, isSubmitting }) => (
                   <FormikForm onSubmit={handleSubmit}>
                     <div className="form-group my-3">
                       <label htmlFor="name">{t("articleForm.title")}</label>
@@ -239,6 +241,7 @@ export default function ArticleEdit() {
                         className="mt-3 text-white"
                         type="submit"
                         variant="dark"
+                        disabled={isSubmitting}
                       >
                         {t("articleForm.editArticle")}
                       </Button>
