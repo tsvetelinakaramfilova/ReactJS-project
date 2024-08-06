@@ -17,6 +17,10 @@ export default function Header() {
       title: t("home"),
     },
     {
+      to: "/weather",
+      title: t("weather.weather"),
+    },
+    {
       to: "/articles",
       title: t("articles"),
     },

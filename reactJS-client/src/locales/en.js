@@ -70,6 +70,10 @@ const en = {
     notFound: {
       goToHome: "Go to Home",
     },
+    weather: {
+      weather: "Weather",
+      enterCity: "Enter city name",
+    },
   },
 };
 export default en;

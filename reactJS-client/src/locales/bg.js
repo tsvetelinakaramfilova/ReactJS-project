@@ -70,6 +70,10 @@ const bg = {
     notFound: {
       goToHome: "Отидете в началото",
     },
+    weather: {
+      weather: "Време",
+      enterCity: "Въведете името на града",
+    },
   },
 };
 export default bg;

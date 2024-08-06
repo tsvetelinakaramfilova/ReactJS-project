@@ -17,6 +17,7 @@ import PrivateGuard from "./components/guard/PrivateGuard";
 import PublicGuard from "./components/guard/PublicGuard";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Loader from "./components/loader/Loader";
+import Weather from "./components/weather/Weather";
 const ArticleMy = lazy(() => import("./components/article-my/ArticleMy"));
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Suspense fallback={<Loader />}>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/weather" element={<Weather />} />
               <Route path="/articles" element={<ArticleList />} />
               <Route
                 path="/articles/details/:articleId"
