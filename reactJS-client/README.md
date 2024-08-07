@@ -18,6 +18,9 @@ Run `npm i`. Start `npm run dev`. Local to `http://localhost:5173/`.
 ## Application Overview
 
 An application has been created for two types of users - authorized and guests. Guests have the option to view the recordings in the app and authorize. After authentication, each user is allowed to add items to the available collections - articles and comments. We have different navigation for different users.
+
+All users can use weather section and translation to app on en and bg.
+
 Backend for the project use `https://github.com/tsvetelinakaramfilova/ReactJS-project/tree/main/server`
 
 ### Idea
@@ -49,6 +52,10 @@ Only logged in users have access to it, and guests are redirected to the log in 
 ### Details article page
 
 Any user can access the detailed information about the article. After user authorization, he can add comments. Only the author can edit and delete the article. After deleting the article, all comments about it are deleted.
+
+### My articles page
+
+Only authenticated user see these page where he sees his articles. If there is no article, there is a button to add an article.
 
 ### 404 page
 

@@ -91,7 +91,7 @@ export default function CommentSection() {
               </div>
             </div>
             <div className="d-flex justify-content-between">
-              <p className="card-text my-1">{comment.commentText}</p>
+              <p className="card-text my-1 text-truncate">{comment.commentText}</p>
               <div
                 className={`${styles["itemSvg"]} text-end my-1 text-grey-600`}
               >

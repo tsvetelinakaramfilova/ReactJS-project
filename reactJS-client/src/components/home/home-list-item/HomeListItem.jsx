@@ -17,7 +17,7 @@ export default function HomeListItem({ article }) {
           className="card-img-top my-3"
         />
         <div className="card-body d-grid align-item-end">
-          <h5 className="card-title">{article.name}</h5>
+          <h5 className="card-title  text-truncate">{article.name}</h5>
           <p className="card-text text-end mb-1">
             {new Date(article._createdOn).toLocaleDateString()}
           </p>

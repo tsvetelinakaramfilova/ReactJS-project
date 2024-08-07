@@ -3,7 +3,11 @@ import requester from "./requester";
 const BASE_URL = "http://localhost:3030/data/articles";
 
 const getAll = async () => {
-  const result = await requester.get(BASE_URL);
+  const params = new URLSearchParams({
+    select: "_id,name,tags,description,images"
+  })
+
+  const result = await requester.get(`${BASE_URL}?${params.toString()}`);
 
   return result;
 };
