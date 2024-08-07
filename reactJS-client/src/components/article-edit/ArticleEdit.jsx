@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 import {
   Formik,
   Form as FormikForm,
@@ -11,6 +11,7 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from "react-icons/io";
 import { MdBackspace } from "react-icons/md";
 import { useTranslation } from "react-i18next";
+import { useAuthContext } from "../../contexts/authContext";
 import { useEditArticle, useGetOneArticle } from "../../hooks/useArticles";
 import ErrorMessage from "../error-message/ErrorMessage";
 import Loader from "../loader/Loader";
@@ -22,6 +23,7 @@ export default function ArticleEdit() {
   const { article, isFetching } = useGetOneArticle(articleId);
   const editArticle = useEditArticle();
   const [error, setError] = useState("");
+  const { userId } = useAuthContext();
 
   const initialValues = {
     name: article?.name || "",
@@ -74,7 +76,7 @@ export default function ArticleEdit() {
 
   return isFetching ? (
     <Loader />
-  ) : (
+  ) : userId === article._ownerId ? (
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-8">
@@ -260,5 +262,7 @@ export default function ArticleEdit() {
         </div>
       </div>
     </div>
+  ) : (
+    <Navigate to={"/articles"} />
   );
 }
