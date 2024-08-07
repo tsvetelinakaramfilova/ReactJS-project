@@ -71,7 +71,7 @@ export default function CommentSection() {
   return (
     <div className="my-4">
       <div>
-        <h4 style={{ fontFamily: "Lora" }} className="ms-1">
+        <h4 className="ms-1 fst-italic mb-3">
           {t("comments.comments")}
         </h4>
       </div>
@@ -83,7 +83,7 @@ export default function CommentSection() {
         </div>
       ) : (
         comments.map((comment) => (
-          <div key={comment._id} className="card my-3 py-2 px-3">
+          <div key={comment._id} className="card my-3 py-2 px-3 shadow-sm p-3 mb-4 bg-body rounded">
             <div className="flex-grow-1 d-flex align-items-center">
               <h5 className="card-title ms-1 mb-0">{comment.author.email}</h5>
               <div className="ms-auto text-end my-2 text-grey-600 star">
@@ -91,7 +91,7 @@ export default function CommentSection() {
               </div>
             </div>
             <div className="d-flex justify-content-between">
-              <p className="card-text my-1 text-truncate">{comment.commentText}</p>
+              <p className="card-text my-1">{comment.commentText}</p>
               <div
                 className={`${styles["itemSvg"]} text-end my-1 text-grey-600`}
               >
@@ -108,7 +108,7 @@ export default function CommentSection() {
       )}
       {isAuthenticated && (
         <div className="my-4">
-          <div className="card my-3 py-4 px-4">
+          <div className="card my-3 py-4 px-4 shadow-sm p-3 mb-5 bg-body rounded">
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}

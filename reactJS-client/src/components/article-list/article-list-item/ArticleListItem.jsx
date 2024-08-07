@@ -26,7 +26,7 @@ export default function ArticleListItem({ article }) {
                 to={`/articles/details/${article._id}`}
                 className={styles["link-item"]}
               >
-                <div className="flex-grow-1 d-lg-flex align-items-center">
+                <div className="flex-grow-1 d-lg-flex align-items-center mb-2">
                   <h5 className="card-title ms-1 mb-0">{article.name}</h5>
                   <div className="rounded-pill ms-auto text-end my-2">
                     <ArticleTag tags={article.tags} />

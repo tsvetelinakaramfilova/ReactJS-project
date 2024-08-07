@@ -37,7 +37,6 @@ export default function ArticleDetails() {
       <div className="page-title">
         <div className="row">
           <h3
-            style={{ fontFamily: "Lora" }}
             className="card-title ms-1  mt-3 mb-0 text-center"
           >
             {article.name}
