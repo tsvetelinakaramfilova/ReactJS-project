@@ -1339,6 +1339,27 @@
     	}
     };
     var seedData = {
+        articles: { 
+            "774b95a6-8045-49f1-88ac-30cbf1907fbf": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                name: "Introduction to React Hooks",
+                tags: ["react", "hooks", "javascript"],
+                timeRead: 10,
+                description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+                images: [
+                 "https://i.ibb.co/kMj0gfX/horizontel-logo.jpg"
+                ],
+            _createdOn: 1683020157590
+          },
+        },
+        commentsArticles: {
+            "96b4a243-ff36-49a6-88f6-bc89721c3a04": {
+                _ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
+                articleId: "774b95a6-8045-49f1-88ac-30cbf1907fbf",
+                commentText: "Comment",
+                _createdOn: 1723038740009
+            }
+        },
     	recipes: {
     		"3987279d-0ad4-4afb-8ca9-5b256ae3b298": {
     			_ownerId: "35c62d76-8152-4626-8712-eeb96381bea8",
