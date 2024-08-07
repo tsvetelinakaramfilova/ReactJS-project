@@ -1,9 +1,21 @@
 import { Link } from "react-router-dom";
-import brandLogo from "../../../assets/Logo_f.png";
 import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import brandLogo from "../../../assets/Logo_f.png";
 
 export default function HomeHeader() {
   const { t } = useTranslation();
+
+  const floatVariants = {
+    float: {
+      y: [0, -10, 0], 
+      transition: {
+        duration: 3,
+        ease: "easeInOut",
+        repeat: Infinity,
+      },
+    },
+  };
 
   return (
     <section id="hero" className="section hero my-2">
@@ -19,7 +31,13 @@ export default function HomeHeader() {
             </div>
           </div>
           <div className="col-lg-6 order-1 order-lg-2 hero-img text-center">
-            <img src={brandLogo} className="img-fluid w-50" alt="ArticleLogo" />
+            <motion.img
+              src={brandLogo}
+              className="img-fluid w-50"
+              alt="ArticleLogo"
+              variants={floatVariants}
+              animate="float"
+            />
           </div>
         </div>
       </div>
